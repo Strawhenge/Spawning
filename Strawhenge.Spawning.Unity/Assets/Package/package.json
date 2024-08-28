@@ -7,6 +7,7 @@
     "name": "Matt Bristow"
   },
   "dependencies": {
-    "com.strawhenge.common": "https://github.com/Strawhenge/Common.git?path=/Package#release"
+    "com.strawhenge.common": "https://github.com/Strawhenge/Common.git?path=/Package#release",
+    "com.strawhenge.functionalutilities": "https://github.com/Strawhenge/FunctionalUtilities.git?path=/Package#release"
   }
 }
