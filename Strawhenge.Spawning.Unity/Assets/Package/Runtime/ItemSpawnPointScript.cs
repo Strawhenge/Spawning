@@ -86,10 +86,8 @@ namespace Strawhenge.Spawning.Unity
             if (other == _playerTriggerCollider)
             {
                 Spawn();
-                return;
             }
-
-            if (LayersAccessor.BlockingLayerMask.ContainsLayer(other.gameObject.layer))
+            else if (LayersAccessor.BlockingLayerMask.ContainsLayer(other.gameObject.layer))
             {
                 if (!_blockingColliders.Contains(other))
                     _blockingColliders.Add(other);
