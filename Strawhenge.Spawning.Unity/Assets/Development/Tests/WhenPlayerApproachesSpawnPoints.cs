@@ -4,12 +4,12 @@ using UnityEngine.TestTools;
 
 namespace Strawhenge.Spawning.Unity.Tests
 {
-    public class ItemSpawnPointTests : BaseTest
+    public class WhenPlayerApproachesSpawnPoints : BaseTest
     {
         protected override string SceneName => SceneNames.ItemSpawnPointTests;
 
         [UnityTest]
-        public IEnumerator Items_should_spawn_when_player_is_near_spawn_points()
+        public IEnumerator SpawnPointsShouldSpawn()
         {
             SpawnsHelper.VerifyNoSpawns();
             yield return new WaitForFixedUpdate();

@@ -25,7 +25,7 @@ namespace Strawhenge.Spawning.Unity
                 : transform;
 
             _canSpawn = true;
-            
+
             if (_playerTriggerCollider == null)
             {
                 Debug.LogError($"'{nameof(_playerTriggerCollider)}' not set.", this);
@@ -39,6 +39,15 @@ namespace Strawhenge.Spawning.Unity
             }
         }
 
+        [ContextMenu(nameof(Spawn))]
+        public void Spawn()
+        {
+            if (_currentSpawn != null)
+                return;
+
+            _currentSpawn = TrySpawnItem();
+        }
+
         void OnTriggerEnter(Collider other)
         {
             if (!_canSpawn)
@@ -47,10 +56,7 @@ namespace Strawhenge.Spawning.Unity
             if (other != _playerTriggerCollider)
                 return;
 
-            if (_currentSpawn != null)
-                return;
-
-            _currentSpawn = TrySpawnItem();
+            Spawn();
         }
 
         ItemSpawnScript TrySpawnItem()
@@ -64,7 +70,7 @@ namespace Strawhenge.Spawning.Unity
                 ? items[0]
                 : items[Random.Range(0, items.Length)];
 
-            return Instantiate(prefab, _point.position, _point.rotation);
+            return Instantiate(prefab, _point);
         }
     }
 }
