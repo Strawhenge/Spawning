@@ -12,7 +12,7 @@ namespace Strawhenge.Spawning.Unity
         [SerializeField] ItemSpawnCollectionScriptableObject _spawnCollection;
 
         [SerializeField, Tooltip(
-             "Optional. Sets the position and orientation of the spawned items (otherwise uses 'this' transform)")]
+             "Optional. Sets the position and orientation of the spawned items (otherwise uses 'this' transform).")]
         Transform _overridePoint;
 
         [SerializeField] Collider _playerTriggerCollider;
