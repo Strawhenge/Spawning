@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using Strawhenge.Spawning.Unity;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,22 +7,22 @@ using UnityEngine.TestTools;
 public class ItemSpawnPointTests
 {
     const string Scene = "ItemSpawnPointTests";
-    ItemSpawnPointTestsScript _context;
+    TestContextScript _context;
 
     [UnitySetUp]
     public IEnumerator LoadScene()
     {
         yield return SceneManager.LoadSceneAsync(Scene);
-        _context = Object.FindObjectOfType<ItemSpawnPointTestsScript>();
+        _context = Object.FindObjectOfType<TestContextScript>();
 
         if (_context == null || _context.IsInvalid())
             Assert.Fail("Test context is invalid.");
     }
-   
+
     [UnityTest]
     public IEnumerator Items_should_spawn_when_player_is_near_spawn_points()
     {
-        VerifyNoSpawns();
+        SpawnsHelper.VerifyNoSpawns();
         yield return new WaitForFixedUpdate();
 
         yield return SpawnPointShouldSpawnWhenPlayerMovesNear();
@@ -36,37 +35,24 @@ public class ItemSpawnPointTests
 
         foreach (var spawnPoint in _context.SpawnPoints)
         {
-            MovePlayerTo(spawnPoint);
+            _context.MovePlayerTo(spawnPoint);
             yield return new WaitForFixedUpdate();
-            
+
             expectedNumberOfSpawns++;
-            VerifyNumberOfSpawns(expectedNumberOfSpawns);
+            SpawnsHelper.VerifyNumberOfSpawns(expectedNumberOfSpawns);
         }
     }
-    
+
     IEnumerator SpawnPointsShouldNotRespawnWhenPlayerReturns()
     {
-        var numberOfSpawns = GetNumberOfSpawns();
-        
+        var numberOfSpawns = SpawnsHelper.GetNumberOfSpawns();
+
         foreach (var spawnPoint in _context.SpawnPoints)
         {
-            MovePlayerTo(spawnPoint);
+            _context.MovePlayerTo(spawnPoint);
             yield return new WaitForFixedUpdate();
-            
-            VerifyNumberOfSpawns(numberOfSpawns);
+
+            SpawnsHelper.VerifyNumberOfSpawns(numberOfSpawns);
         }
     }
-
-    void MovePlayerTo(ItemSpawnPointScript spawnPoint) => _context.MovePlayerTo(spawnPoint);
-
-    static void VerifyNumberOfSpawns(int numberOfSpawns)
-    {
-        var actualSpawns = GetNumberOfSpawns();
-        TestContext.WriteLine($"Spawns: {actualSpawns}");
-        Assert.AreEqual(numberOfSpawns, actualSpawns);
-    }
-
-    static void VerifyNoSpawns() => Assert.Zero(GetNumberOfSpawns());
-
-    static int GetNumberOfSpawns() => Object.FindObjectsOfType<ItemSpawnScript>().Length;
 }

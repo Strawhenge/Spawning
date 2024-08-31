@@ -2,7 +2,7 @@ using NUnit.Framework;
 using Strawhenge.Spawning.Unity;
 using UnityEngine;
 
-public class ItemSpawnPointTestsScript : MonoBehaviour
+public class TestContextScript : MonoBehaviour
 {
     [SerializeField] GameObject _player;
 
