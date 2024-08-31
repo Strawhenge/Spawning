@@ -11,7 +11,7 @@ namespace Strawhenge.Spawning.Unity.Tests
         [UnityTest]
         public IEnumerator SpawnPointsShouldRespawn()
         {
-            foreach (var spawnPoint in Context.SpawnPoints)
+            foreach (var spawnPoint in Context.UnblockedSpawnPoints)
             {
                 Context.MovePlayerTo(spawnPoint);
                 yield return new WaitForFixedUpdate();
@@ -19,13 +19,13 @@ namespace Strawhenge.Spawning.Unity.Tests
            
             SpawnsHelper.DespawnHalf();
             
-            foreach (var spawnPoint in Context.SpawnPoints)
+            foreach (var spawnPoint in Context.UnblockedSpawnPoints)
             {
                 Context.MovePlayerTo(spawnPoint);
                 yield return new WaitForFixedUpdate();
             }
             
-            SpawnsHelper.VerifyNumberOfSpawns(Context.SpawnPoints.Length);
+            SpawnsHelper.VerifyNumberOfSpawns(Context.UnblockedSpawnPoints.Length);
         }
     }
 }

@@ -1,3 +1,6 @@
+using Strawhenge.Common.Unity;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -14,9 +17,12 @@ namespace Strawhenge.Spawning.Unity
 
         [SerializeField] Collider _playerTriggerCollider;
 
+        readonly List<Collider> _blockingColliders = new();
         Transform _point;
         ItemSpawnScript _currentSpawn;
         bool _canSpawn;
+
+        public ILayersAccessor LayersAccessor { private get; set; }
 
         void Awake()
         {
@@ -42,35 +48,61 @@ namespace Strawhenge.Spawning.Unity
         [ContextMenu(nameof(Spawn))]
         public void Spawn()
         {
-            if (_currentSpawn != null)
+            AssessBlockingColliders();
+
+            if (CannotSpawn())
                 return;
 
-            _currentSpawn = TrySpawnItem();
+            TrySpawnItem();
         }
 
-        void OnTriggerEnter(Collider other)
+        bool CannotSpawn() => !_canSpawn || _blockingColliders.Any() || _currentSpawn != null;
+
+        void AssessBlockingColliders()
         {
-            if (!_canSpawn)
-                return;
-
-            if (other != _playerTriggerCollider)
-                return;
-
-            Spawn();
+            for (var i = 0; i < _blockingColliders.Count; i++)
+            {
+                if (_blockingColliders[i] == null)
+                    _blockingColliders.RemoveAt(i);
+            }
         }
 
-        ItemSpawnScript TrySpawnItem()
+        void TrySpawnItem()
         {
             var items = _spawnCollection.Spawns.ToArray();
 
             if (items.Length == 0)
-                return null;
+                return;
 
             var prefab = items.Length == 1
                 ? items[0]
                 : items[Random.Range(0, items.Length)];
 
-            return Instantiate(prefab, _point);
+            _currentSpawn = Instantiate(prefab, _point);
+        }
+
+        void OnTriggerEnter(Collider other)
+        {
+            if (other == _playerTriggerCollider)
+            {
+                Spawn();
+                return;
+            }
+
+            if (LayersAccessor.BlockingLayerMask.ContainsLayer(other.gameObject.layer))
+            {
+                if (!_blockingColliders.Contains(other))
+                    _blockingColliders.Add(other);
+            }
+        }
+
+        void OnTriggerExit(Collider other)
+        {
+            if (other == _playerTriggerCollider)
+                return;
+
+            if (_blockingColliders.Contains(other))
+                _blockingColliders.Remove(other);
         }
     }
 }

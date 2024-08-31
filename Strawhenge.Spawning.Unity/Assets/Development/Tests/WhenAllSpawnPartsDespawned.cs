@@ -12,7 +12,7 @@ namespace Strawhenge.Spawning.Unity.Tests
         [UnityTest]
         public IEnumerator SpawnsShouldDisappear()
         {
-            Context.SpawnPoints.ForEach(x => x.Spawn());
+            Context.UnblockedSpawnPoints.ForEach(x => x.Spawn());
 
             var expectedNumberOfSpawns = SpawnsHelper.GetNumberOfSpawns();
 

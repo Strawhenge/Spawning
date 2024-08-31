@@ -11,7 +11,7 @@ namespace Strawhenge.Spawning.Unity.Tests
         [UnityTest]
         public IEnumerator SpawnPointsShouldNotSpawnAgain()
         {
-            foreach (var spawnPoint in Context.SpawnPoints)
+            foreach (var spawnPoint in Context.UnblockedSpawnPoints)
             {
                 Context.MovePlayerTo(spawnPoint);
                 yield return new WaitForFixedUpdate();
@@ -19,7 +19,7 @@ namespace Strawhenge.Spawning.Unity.Tests
 
             var numberOfSpawns = SpawnsHelper.GetNumberOfSpawns();
 
-            foreach (var spawnPoint in Context.SpawnPoints)
+            foreach (var spawnPoint in Context.UnblockedSpawnPoints)
             {
                 Context.MovePlayerTo(spawnPoint);
                 yield return new WaitForFixedUpdate();

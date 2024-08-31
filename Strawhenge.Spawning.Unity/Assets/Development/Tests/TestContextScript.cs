@@ -1,18 +1,36 @@
 using NUnit.Framework;
-using Strawhenge.Spawning.Unity;
+using Strawhenge.Common;
+using System;
+using System.Linq;
 using UnityEngine;
 
 namespace Strawhenge.Spawning.Unity.Tests
 {
-    public class TestContextScript : MonoBehaviour
+    public class TestContextScript : MonoBehaviour, ILayersAccessor
     {
         [SerializeField] GameObject _player;
+        [SerializeField] LayerMask _blockingLayerMask;
+        [SerializeField] ItemSpawnPointScript[] _blockedSpawnPoints;
+        [SerializeField] GameObject[] _blockingObjects;
 
-        public ItemSpawnPointScript[] SpawnPoints { get; private set; }
+        public ItemSpawnPointScript[] BlockedSpawnPoints { get; private set; }
+
+        public ItemSpawnPointScript[] UnblockedSpawnPoints { get; private set; }
+
+        public ItemSpawnPointScript[] AllSpawnPoints { get; private set; }
+
+        public LayerMask BlockingLayerMask => _blockingLayerMask;
 
         void Awake()
         {
-            SpawnPoints = FindObjectsOfType<ItemSpawnPointScript>();
+            AllSpawnPoints = FindObjectsOfType<ItemSpawnPointScript>();
+            BlockedSpawnPoints = _blockedSpawnPoints.ExcludeNull().ToArray();
+            UnblockedSpawnPoints = AllSpawnPoints.Where(x => !BlockedSpawnPoints.Contains(x)).ToArray();
+
+            foreach (var spawnPoint in AllSpawnPoints)
+            {
+                spawnPoint.LayersAccessor = this;
+            }
         }
 
         public bool IsInvalid()
@@ -25,8 +43,8 @@ namespace Strawhenge.Spawning.Unity.Tests
                 valid = false;
             }
 
-            TestContext.WriteLine($"{SpawnPoints.Length} spawn points in scene.");
-            if (SpawnPoints.Length == 0)
+            TestContext.WriteLine($"{UnblockedSpawnPoints.Length} spawn points in scene.");
+            if (UnblockedSpawnPoints.Length == 0)
                 valid = false;
 
             return !valid;
@@ -36,6 +54,12 @@ namespace Strawhenge.Spawning.Unity.Tests
         {
             TestContext.WriteLine($"Moving player to spawn point {spawnPoint.name}.");
             _player.transform.position = spawnPoint.transform.position;
+        }
+
+        public void UnblockSpawnPoints()
+        {
+            foreach (var blockingObject in _blockingObjects)
+                Destroy(blockingObject);
         }
     }
 }
