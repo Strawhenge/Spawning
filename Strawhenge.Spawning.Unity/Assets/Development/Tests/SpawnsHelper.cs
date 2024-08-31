@@ -2,16 +2,19 @@
 using Strawhenge.Spawning.Unity;
 using UnityEngine;
 
-public static class SpawnsHelper
+namespace Strawhenge.Spawning.Unity.Tests
 {
-    public static void VerifyNumberOfSpawns(int numberOfSpawns)
+    public static class SpawnsHelper
     {
-        var actualSpawns = GetNumberOfSpawns();
-        TestContext.WriteLine($"Spawns: {actualSpawns}");
-        Assert.AreEqual(numberOfSpawns, actualSpawns);
+        public static void VerifyNumberOfSpawns(int numberOfSpawns)
+        {
+            var actualSpawns = GetNumberOfSpawns();
+            TestContext.WriteLine($"Spawns: {actualSpawns}");
+            Assert.AreEqual(numberOfSpawns, actualSpawns);
+        }
+
+        public static void VerifyNoSpawns() => Assert.Zero(GetNumberOfSpawns());
+
+        public static int GetNumberOfSpawns() => Object.FindObjectsOfType<ItemSpawnScript>().Length;
     }
-
-    public static void VerifyNoSpawns() => Assert.Zero(GetNumberOfSpawns());
-
-    public static int GetNumberOfSpawns() => Object.FindObjectsOfType<ItemSpawnScript>().Length;
 }

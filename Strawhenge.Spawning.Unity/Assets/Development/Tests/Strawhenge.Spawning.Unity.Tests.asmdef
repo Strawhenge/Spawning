@@ -1,6 +1,6 @@
 {
     "name": "Strawhenge.Spawning.Unity.Tests",
-    "rootNamespace": "",
+    "rootNamespace": "Strawhenge.Spawning.Unity.Tests",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
