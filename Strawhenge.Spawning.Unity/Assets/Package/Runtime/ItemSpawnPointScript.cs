@@ -62,7 +62,7 @@ namespace Strawhenge.Spawning.Unity
 
             var prefab = items.Length == 1
                 ? items[0]
-                : items[Random.Range(0, items.Length - 1)];
+                : items[Random.Range(0, items.Length)];
 
             return Instantiate(prefab, _point.position, _point.rotation);
         }
