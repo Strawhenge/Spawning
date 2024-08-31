@@ -57,14 +57,14 @@ public class ItemSpawnPointTests
         }
     }
 
-    void VerifyNumberOfSpawns(int numberOfSpawns)
+    void MovePlayerTo(ItemSpawnPointScript spawnPoint) => _context.MovePlayerTo(spawnPoint);
+
+    static void VerifyNumberOfSpawns(int numberOfSpawns)
     {
         var actualSpawns = GetNumberOfSpawns();
         TestContext.WriteLine($"Spawns: {actualSpawns}");
         Assert.AreEqual(numberOfSpawns, actualSpawns);
     }
-
-    void MovePlayerTo(ItemSpawnPointScript spawnPoint) => _context.MovePlayerTo(spawnPoint);
 
     static void VerifyNoSpawns() => Assert.Zero(GetNumberOfSpawns());
 
