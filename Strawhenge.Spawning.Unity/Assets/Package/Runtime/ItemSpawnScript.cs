@@ -1,4 +1,5 @@
 ﻿using Strawhenge.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace Strawhenge.Spawning.Unity
         int _despawnCount;
 
         public IReadOnlyList<ItemSpawnPartScript> Parts { get; private set; }
+
+        public Action<ItemSpawnScript> OnDespawn { private get; set; }
 
         void Awake()
         {
@@ -36,7 +39,10 @@ namespace Strawhenge.Spawning.Unity
 
             _despawnCount++;
             if (_despawnCount >= Parts.Count)
+            {
                 Destroy(gameObject);
+                OnDespawn(this);
+            }
         }
     }
 }
