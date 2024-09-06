@@ -1,5 +1,6 @@
 ﻿using Strawhenge.Common;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Strawhenge.Spawning.Unity
@@ -9,6 +10,10 @@ namespace Strawhenge.Spawning.Unity
     {
         [SerializeField] ItemSpawnScript[] _spawns;
 
-        public IEnumerable<ItemSpawnScript> Spawns => _spawns.ExcludeNull();
+        public IReadOnlyList<ItemSpawnScript> GetSpawnPrefabs() =>
+            _spawns
+                .ExcludeNull()
+                .Distinct()
+                .ToArray();
     }
 }

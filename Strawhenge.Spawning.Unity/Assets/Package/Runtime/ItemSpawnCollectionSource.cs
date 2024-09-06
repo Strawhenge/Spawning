@@ -1,26 +1,26 @@
 ﻿using FunctionalUtilities;
-using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Strawhenge.Spawning.Unity
 {
     public class ItemSpawnCollectionSource : IItemSpawnSource
     {
-        readonly ItemSpawnScript[] _prefabs;
+        readonly IReadOnlyList<ItemSpawnScript> _prefabs;
 
         public ItemSpawnCollectionSource(ItemSpawnCollectionScriptableObject spawnCollection)
         {
-            _prefabs = spawnCollection.Spawns.ToArray();
+            _prefabs = spawnCollection.GetSpawnPrefabs();
         }
 
         public Maybe<ItemSpawnScript> TryGetSpawn(Transform parent)
         {
-            if (_prefabs.Length == 0)
+            if (_prefabs.Count == 0)
                 return Maybe.None<ItemSpawnScript>();
 
-            var prefab = _prefabs.Length == 1
+            var prefab = _prefabs.Count == 1
                 ? _prefabs[0]
-                : _prefabs[Random.Range(0, _prefabs.Length)];
+                : _prefabs[Random.Range(0, _prefabs.Count)];
 
             return Instantiate(prefab, parent);
         }
