@@ -10,6 +10,7 @@ namespace Strawhenge.Spawning.Unity
     {
         [SerializeField] ItemSpawnPartScript[] _parts;
 
+        readonly List<(ItemSpawnPartScript part, Vector3 position, Quaternion rotation)> _originalPartPositions = new();
         int _despawnCount;
 
         public event Action Despawned;
@@ -24,6 +25,16 @@ namespace Strawhenge.Spawning.Unity
             set => _parts.ForEach(part => part.DespawnStrategy = value);
         }
 
+        [ContextMenu(nameof(ResetParts))]
+        public void ResetParts()
+        {
+            foreach (var (part, position, rotation) in _originalPartPositions)
+            {
+                if (part != null)
+                    part.transform.SetPositionAndRotation(position, rotation);
+            }
+        }
+
         void Awake()
         {
             Parts = _parts.ExcludeNull().ToArray();
@@ -36,8 +47,8 @@ namespace Strawhenge.Spawning.Unity
 
             foreach (var part in Parts)
             {
-                part.transform.parent = null;
                 part.Despawned += OnPartDespawned;
+                _originalPartPositions.Add((part, part.transform.position, part.transform.rotation));
             }
         }
 
