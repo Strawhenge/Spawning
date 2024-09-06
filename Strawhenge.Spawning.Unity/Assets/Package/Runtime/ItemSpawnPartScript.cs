@@ -5,12 +5,15 @@ namespace Strawhenge.Spawning.Unity
 {
     public class ItemSpawnPartScript : MonoBehaviour
     {
+        public event Action<ItemSpawnPartScript> Despawned;
+
         [ContextMenu(nameof(Despawn))]
         public void Despawn()
         {
-            OnDespawn(this);
+            DespawnStrategy(this);
+            Despawned?.Invoke(this);
         }
 
-        public Action<ItemSpawnPartScript> OnDespawn { private get; set; } = _ => { };
+        public Action<ItemSpawnPartScript> DespawnStrategy { private get; set; } = _ => { };
     }
 }

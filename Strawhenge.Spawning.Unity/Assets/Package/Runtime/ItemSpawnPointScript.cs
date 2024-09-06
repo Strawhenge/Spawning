@@ -1,10 +1,8 @@
 using FunctionalUtilities;
 using Strawhenge.Common.Unity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Strawhenge.Spawning.Unity
 {
@@ -62,7 +60,13 @@ namespace Strawhenge.Spawning.Unity
 
             _currentSpawn = _spawnSource.TryGetSpawn(_point);
             _currentSpawn.Do(
-                spawn => spawn.OnDespawn = _ => _currentSpawn = Maybe.None<ItemSpawnScript>());
+                spawn => spawn.Despawned += OnCurrentDespawned);
+        }
+
+        void OnCurrentDespawned()
+        {
+            _currentSpawn.Do(spawn => spawn.Despawned -= OnCurrentDespawned);
+            _currentSpawn = Maybe.None<ItemSpawnScript>();
         }
 
         bool CannotSpawn() => _invalidSetup || _blockingColliders.Any() || _currentSpawn.HasSome();

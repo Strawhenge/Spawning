@@ -12,9 +12,16 @@ namespace Strawhenge.Spawning.Unity
 
         int _despawnCount;
 
+        public event Action Despawned;
+
         public IReadOnlyList<ItemSpawnPartScript> Parts { get; private set; }
 
-        public Action<ItemSpawnScript> OnDespawn { private get; set; }
+        public Action<ItemSpawnScript> DespawnStrategy { private get; set; }
+
+        public Action<ItemSpawnPartScript> DespawnPartStrategy
+        {
+            set => _parts.ForEach(part => part.DespawnStrategy = value);
+        }
 
         void Awake()
         {
@@ -29,19 +36,17 @@ namespace Strawhenge.Spawning.Unity
             foreach (var part in Parts)
             {
                 part.transform.parent = null;
-                part.OnDespawn = OnPartDespawned;
+                part.Despawned += OnPartDespawned;
             }
         }
 
         void OnPartDespawned(ItemSpawnPartScript part)
         {
-            Destroy(part.gameObject);
-
             _despawnCount++;
             if (_despawnCount >= Parts.Count)
             {
-                Destroy(gameObject);
-                OnDespawn(this);
+                DespawnStrategy(this);
+                Despawned?.Invoke();
             }
         }
     }

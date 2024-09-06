@@ -6,25 +6,33 @@ namespace Strawhenge.Spawning.Unity
 {
     public class ItemSpawnCollectionSource : IItemSpawnSource
     {
-        readonly ItemSpawnCollectionScriptableObject _spawnCollection;
+        readonly ItemSpawnScript[] _prefabs;
 
         public ItemSpawnCollectionSource(ItemSpawnCollectionScriptableObject spawnCollection)
         {
-            _spawnCollection = spawnCollection;
+            _prefabs = spawnCollection.Spawns.ToArray();
         }
 
         public Maybe<ItemSpawnScript> TryGetSpawn(Transform parent)
         {
-            var items = _spawnCollection.Spawns.ToArray();
-
-            if (items.Length == 0)
+            if (_prefabs.Length == 0)
                 return Maybe.None<ItemSpawnScript>();
 
-            var prefab = items.Length == 1
-                ? items[0]
-                : items[Random.Range(0, items.Length)];
+            var prefab = _prefabs.Length == 1
+                ? _prefabs[0]
+                : _prefabs[Random.Range(0, _prefabs.Length)];
 
-            return Object.Instantiate(prefab, parent);
+            return Instantiate(prefab, parent);
+        }
+
+        static ItemSpawnScript Instantiate(ItemSpawnScript prefab, Transform parent)
+        {
+            var instance = Object.Instantiate(prefab, parent);
+
+            instance.DespawnStrategy = spawn => Object.Destroy(spawn.gameObject);
+            instance.DespawnPartStrategy = part => Object.Destroy(part.gameObject);
+
+            return instance;
         }
     }
 }
