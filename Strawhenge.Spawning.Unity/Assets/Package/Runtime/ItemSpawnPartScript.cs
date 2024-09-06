@@ -14,6 +14,7 @@ namespace Strawhenge.Spawning.Unity
             Despawned?.Invoke(this);
         }
 
-        public Action<ItemSpawnPartScript> DespawnStrategy { private get; set; } = _ => { };
+        public Action<ItemSpawnPartScript> DespawnStrategy { private get; set; } =
+            part => Debug.LogError($"{nameof(DespawnStrategy)} not set.", part);
     }
 }

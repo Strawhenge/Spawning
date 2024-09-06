@@ -16,7 +16,8 @@ namespace Strawhenge.Spawning.Unity
 
         public IReadOnlyList<ItemSpawnPartScript> Parts { get; private set; }
 
-        public Action<ItemSpawnScript> DespawnStrategy { private get; set; }
+        public Action<ItemSpawnScript> DespawnStrategy { private get; set; } =
+            spawn => Debug.LogError($"{nameof(DespawnStrategy)} not set.", spawn);
 
         public Action<ItemSpawnPartScript> DespawnPartStrategy
         {
