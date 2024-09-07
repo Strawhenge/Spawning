@@ -31,7 +31,7 @@ namespace Strawhenge.Spawning.Unity
             foreach (var (part, position, rotation) in _originalPartPositions)
             {
                 if (part != null)
-                    part.transform.SetPositionAndRotation(position, rotation);
+                    part.transform.SetLocalPositionAndRotation(position, rotation);
             }
         }
 
@@ -48,7 +48,7 @@ namespace Strawhenge.Spawning.Unity
             foreach (var part in Parts)
             {
                 part.Despawned += OnPartDespawned;
-                _originalPartPositions.Add((part, part.transform.position, part.transform.rotation));
+                _originalPartPositions.Add((part, part.transform.localPosition, part.transform.localRotation));
             }
         }
 

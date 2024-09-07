@@ -13,11 +13,16 @@ namespace Strawhenge.Spawning.Unity.Tests
         [SerializeField] ItemSpawnPointScript[] _blockedSpawnPoints;
         [SerializeField] GameObject[] _blockingObjects;
 
+        [SerializeField, Tooltip("Spawn points that only have create spawns with multiple parts.")]
+        ItemSpawnPointScript[] _multiItemSpawnPoints;
+
         public ItemSpawnPointScript[] BlockedSpawnPoints { get; private set; }
 
         public ItemSpawnPointScript[] UnblockedSpawnPoints { get; private set; }
 
         public ItemSpawnPointScript[] AllSpawnPoints { get; private set; }
+
+        public ItemSpawnPointScript[] MultiItemSpawnPoints { get; private set; }
 
         public LayerMask BlockingLayerMask => _blockingLayerMask;
 
@@ -26,9 +31,10 @@ namespace Strawhenge.Spawning.Unity.Tests
             AllSpawnPoints = FindObjectsOfType<ItemSpawnPointScript>();
             BlockedSpawnPoints = _blockedSpawnPoints.ExcludeNull().ToArray();
             UnblockedSpawnPoints = AllSpawnPoints.Where(x => !BlockedSpawnPoints.Contains(x)).ToArray();
+            MultiItemSpawnPoints = _multiItemSpawnPoints.ExcludeNull().ToArray();
 
             var spawnSourceFactory = new ItemSpawnCollectionSourceFactory();
-            
+
             foreach (var spawnPoint in AllSpawnPoints)
             {
                 spawnPoint.LayersAccessor = this;
@@ -63,6 +69,15 @@ namespace Strawhenge.Spawning.Unity.Tests
         {
             foreach (var blockingObject in _blockingObjects)
                 Destroy(blockingObject);
+        }
+
+        public void DisableSpawnPoints(ItemSpawnPointScript except)
+        {
+            foreach (var spawnPoint in AllSpawnPoints)
+            {
+                if (spawnPoint != except)
+                    Destroy(spawnPoint.gameObject);
+            }
         }
     }
 }
