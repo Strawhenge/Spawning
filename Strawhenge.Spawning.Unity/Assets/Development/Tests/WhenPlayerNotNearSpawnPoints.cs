@@ -4,7 +4,7 @@ using UnityEngine.TestTools;
 
 namespace Strawhenge.Spawning.Unity.Tests
 {
-    public class WhenPlayerNotNearSpawnPoints : BaseTest
+    public class WhenPlayerNotNearSpawnPoints : BaseTest<TestContextScript>
     {
         protected override string SceneName => SceneNames.ItemSpawnPointTests;
 

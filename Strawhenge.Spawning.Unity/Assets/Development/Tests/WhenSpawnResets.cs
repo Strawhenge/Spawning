@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace Strawhenge.Spawning.Unity.Tests
 {
-    public class WhenSpawnResets : BaseTest
+    public class WhenSpawnResets : BaseTest<TestContextScript>
     {
         protected override string SceneName => SceneNames.ItemSpawnPointTests;
 

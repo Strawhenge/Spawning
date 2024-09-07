@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Strawhenge.Spawning.Unity.Tests
 {
-    public class TestContextScript : MonoBehaviour, ILayersAccessor
+    public class TestContextScript : BaseTestContextScript, ILayersAccessor
     {
         [SerializeField] GameObject _player;
         [SerializeField] LayerMask _blockingLayerMask;
@@ -42,7 +42,7 @@ namespace Strawhenge.Spawning.Unity.Tests
             }
         }
 
-        public bool IsInvalid()
+        public override bool IsInvalid()
         {
             var valid = true;
 
