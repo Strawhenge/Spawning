@@ -2,6 +2,7 @@
 using Strawhenge.Common;
 using Strawhenge.Spawning.Unity;
 using System;
+using System.Linq;
 using Object = UnityEngine.Object;
 
 namespace Strawhenge.Spawning.Unity.Tests
@@ -15,12 +16,21 @@ namespace Strawhenge.Spawning.Unity.Tests
             Assert.AreEqual(numberOfSpawns, actualSpawns);
         }
 
+        public static void VerifyNumberOfInactiveSpawns(int numberOfSpawns)
+        {
+            var inactiveSpawns = Object.FindObjectsOfType<ItemSpawnScript>(includeInactive: true)
+                .Count(x => !x.gameObject.activeSelf);
+
+            TestContext.WriteLine($"Inactive spawns: {inactiveSpawns}");
+            Assert.AreEqual(numberOfSpawns, inactiveSpawns);
+        }
+
         public static void VerifyNoSpawns() => Assert.Zero(GetNumberOfSpawns());
 
         public static int GetNumberOfSpawns() => GetSpawns().Length;
 
         public static ItemSpawnScript[] GetSpawns() => Object.FindObjectsOfType<ItemSpawnScript>();
-        
+
         public static void DespawnHalf()
         {
             var spawns = GetSpawns();

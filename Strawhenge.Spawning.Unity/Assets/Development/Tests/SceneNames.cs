@@ -3,5 +3,6 @@
     static class SceneNames
     {
         public const string ItemSpawnPointTests = "ItemSpawnPointTests";
+        public const string ItemSpawnPoolTests = "ItemSpawnPoolTests";
     }
 }
