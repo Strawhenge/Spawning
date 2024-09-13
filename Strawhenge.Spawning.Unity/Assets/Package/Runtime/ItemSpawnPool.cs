@@ -46,9 +46,11 @@ namespace Strawhenge.Spawning.Unity
             _quantity = quantity;
         }
 
+        public bool HasAvailableSpawn => _innerPool.CountActive < _quantity;
+
         public Maybe<ItemSpawnScript> TryGet()
         {
-            if (_innerPool.CountActive >= _quantity)
+            if (!HasAvailableSpawn)
                 return Maybe.None<ItemSpawnScript>();
 
             return _innerPool.Get();
