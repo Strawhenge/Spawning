@@ -35,6 +35,8 @@ namespace Strawhenge.Spawning.Unity
             }
         }
 
+        public bool IsInPlayerRadius() => Parts.Any(part => part.IsInPlayerRadius());
+
         void Awake()
         {
             Parts = _parts.ExcludeNull().ToArray();
