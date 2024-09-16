@@ -33,7 +33,7 @@ namespace Strawhenge.Spawning.Unity.Tests
             UnblockedSpawnPoints = AllSpawnPoints.Where(x => !BlockedSpawnPoints.Contains(x)).ToArray();
             MultiItemSpawnPoints = _multiItemSpawnPoints.ExcludeNull().ToArray();
 
-            var spawnSourceFactory = new ItemSpawnCollectionSourceFactory();
+            var spawnSourceFactory = new InstantiateItemSpawnSourceFactory();
 
             foreach (var spawnPoint in AllSpawnPoints)
             {

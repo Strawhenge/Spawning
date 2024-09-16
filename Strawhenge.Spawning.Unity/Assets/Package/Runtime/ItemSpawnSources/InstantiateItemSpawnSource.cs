@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Strawhenge.Spawning.Unity
 {
-    public class ItemSpawnCollectionSource : IItemSpawnSource
+    public class InstantiateItemSpawnSource : IItemSpawnSource
     {
         readonly IReadOnlyList<ItemSpawnScript> _prefabs;
 
-        public ItemSpawnCollectionSource(ItemSpawnCollectionScriptableObject spawnCollection)
+        public InstantiateItemSpawnSource(ItemSpawnCollectionScriptableObject spawnCollection)
         {
             _prefabs = spawnCollection.GetSpawnPrefabs();
         }
