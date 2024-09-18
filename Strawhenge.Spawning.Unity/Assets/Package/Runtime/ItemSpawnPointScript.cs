@@ -24,7 +24,25 @@ namespace Strawhenge.Spawning.Unity
 
         public ILayersAccessor LayersAccessor { private get; set; }
 
+        public ItemSpawnPointsContainer SpawnPointsContainer { private get; set; }
+
         public IItemSpawnSourceFactory SpawnSourceFactory { private get; set; }
+
+        public bool IsInPlayerRadius { get; private set; }
+
+        public bool HasItem => _currentSpawn.HasSome();
+
+        public Maybe<ItemSpawnScript> TakeItem()
+        {
+            try
+            {
+                return _currentSpawn;
+            }
+            finally
+            {
+                OnCurrentDespawned();
+            }
+        }
 
         void Awake()
         {
@@ -47,6 +65,8 @@ namespace Strawhenge.Spawning.Unity
 
         void Start()
         {
+            SpawnPointsContainer.Add(_spawnCollection, this);
+
             _spawnSource = SpawnSourceFactory.Create(_spawnCollection);
         }
 
@@ -84,6 +104,7 @@ namespace Strawhenge.Spawning.Unity
         {
             if (other == _playerTriggerCollider)
             {
+                IsInPlayerRadius = true;
                 Spawn();
             }
             else if (LayersAccessor.BlockingLayerMask.ContainsLayer(other.gameObject.layer))
@@ -96,7 +117,10 @@ namespace Strawhenge.Spawning.Unity
         void OnTriggerExit(Collider other)
         {
             if (other == _playerTriggerCollider)
+            {
+                IsInPlayerRadius = false;
                 return;
+            }
 
             if (_blockingColliders.Contains(other))
                 _blockingColliders.Remove(other);

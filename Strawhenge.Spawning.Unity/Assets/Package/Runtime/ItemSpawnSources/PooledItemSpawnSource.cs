@@ -6,12 +6,17 @@ namespace Strawhenge.Spawning.Unity
 {
     public class PooledItemSpawnSource : IItemSpawnSource
     {
+        readonly ItemSpawnPointsContainer _itemSpawnPointsContainer;
+        readonly ItemSpawnCollectionScriptableObject _itemSpawnCollection;
         Maybe<PredicatedCycle<ItemSpawnPool>> _pools = Maybe.None<PredicatedCycle<ItemSpawnPool>>();
 
         public PooledItemSpawnSource(
             ItemSpawnPoolsContainer itemSpawnPoolsContainer,
+            ItemSpawnPointsContainer itemSpawnPointsContainer,
             ItemSpawnCollectionScriptableObject itemSpawnCollection)
         {
+            _itemSpawnPointsContainer = itemSpawnPointsContainer;
+            _itemSpawnCollection = itemSpawnCollection;
             itemSpawnPoolsContainer.Loaded += CreatePoolCycle;
 
             if (itemSpawnPoolsContainer.IsLoaded)
@@ -29,19 +34,32 @@ namespace Strawhenge.Spawning.Unity
 
         public Maybe<ItemSpawnScript> TryGetSpawn(Transform parent)
         {
-            return _pools.Map(pools => pools
+            var spawn = _pools.Map(pools => pools
                     .Next()
-                    .Map(pool =>
-                    {
-                        var spawn = pool.TryGet();
-                        spawn.Do(spawnScript =>
-                        {
-                            spawnScript.transform.parent = parent;
-                            spawnScript.transform.SetPositionAndRotation(parent.position, parent.rotation);
-                        });
-                        return spawn;
-                    })
+                    .Map(pool => pool.TryGet())
                     .Flatten())
+                .Flatten()
+                .Map(Maybe.Some)
+                .Reduce(GetFromSpawnPoint);
+
+            spawn.Do(spawnScript =>
+            {
+                spawnScript.transform.parent = parent;
+                spawnScript.transform.SetPositionAndRotation(parent.position, parent.rotation);
+                spawnScript.ResetParts();
+            });
+
+            return spawn;
+        }
+
+        Maybe<ItemSpawnScript> GetFromSpawnPoint()
+        {
+            var spawnPoint = _itemSpawnPointsContainer
+                .Get(_itemSpawnCollection)
+                .FirstOrNone(x => x.HasItem && !x.IsInPlayerRadius);
+
+            return spawnPoint
+                .Map(x => x.TakeItem())
                 .Flatten();
         }
     }

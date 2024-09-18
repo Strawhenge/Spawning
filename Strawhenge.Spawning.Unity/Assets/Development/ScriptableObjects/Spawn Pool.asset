@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pool:
   - _prefab: {fileID: 951069721903470221, guid: 14ccf6656c507374f9cbbf3790a52446, type: 3}
-    _quantity: 2
+    _quantity: 10
   - _prefab: {fileID: 951069721903470221, guid: 182145ce4eeb704409a4f4a27ec3dac2, type: 3}
-    _quantity: 2
+    _quantity: 10
   - _prefab: {fileID: 951069721903470221, guid: c9c3bbb3c980a214780869d51e71b159, type: 3}
-    _quantity: 2
+    _quantity: 10
   - _prefab: {fileID: 7671622328733806609, guid: 5bd9251170947d64f9c178d68d8063e7, type: 3}
-    _quantity: 1
+    _quantity: 5
