@@ -8,7 +8,7 @@ namespace Strawhenge.Spawning.Unity
     {
         readonly ItemSpawnPointsContainer _itemSpawnPointsContainer;
         readonly ItemSpawnCollectionScriptableObject _itemSpawnCollection;
-        Maybe<PredicatedCycle<ItemSpawnPool>> _pools = Maybe.None<PredicatedCycle<ItemSpawnPool>>();
+        Maybe<CycleList<ItemSpawnPool>> _pools = Maybe.None<CycleList<ItemSpawnPool>>();
 
         public PooledItemSpawnSource(
             ItemSpawnPoolsContainer itemSpawnPoolsContainer,
@@ -28,7 +28,7 @@ namespace Strawhenge.Spawning.Unity
 
                 var pools = itemSpawnPoolsContainer.GetPool(itemSpawnCollection.GetSpawnPrefabs());
                 if (pools.Count > 0)
-                    _pools = new PredicatedCycle<ItemSpawnPool>(pool => pool.HasAvailableSpawn, pools);
+                    _pools = new CycleList<ItemSpawnPool>(pools, pool => pool.HasAvailableSpawn);
             }
         }
 
