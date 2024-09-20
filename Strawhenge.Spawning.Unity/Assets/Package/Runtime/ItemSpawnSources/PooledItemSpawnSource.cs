@@ -19,7 +19,7 @@ namespace Strawhenge.Spawning.Unity
             void OnPoolsLoaded()
             {
                 itemSpawnPoolsContainer.Loaded -= OnPoolsLoaded;
-                
+
                 _pools.Add(
                     itemSpawnPoolsContainer.GetPools(
                         itemSpawnCollection.GetSpawnPrefabs()));
@@ -28,19 +28,15 @@ namespace Strawhenge.Spawning.Unity
 
         public Maybe<ItemSpawnScript> TryGetSpawn(Transform parent)
         {
-            var spawn = _pools
+            return _pools
                 .Next()
                 .Map(pool => pool.TryGet())
-                .Flatten();
-
-            spawn.Do(spawnScript =>
-            {
-                spawnScript.transform.parent = parent;
-                spawnScript.transform.SetPositionAndRotation(parent.position, parent.rotation);
-                spawnScript.ResetParts();
-            });
-
-            return spawn;
+                .Flatten()
+                .Do(spawnScript =>
+                {
+                    spawnScript.transform.parent = parent;
+                    spawnScript.transform.SetPositionAndRotation(parent.position, parent.rotation);
+                });
         }
     }
 }
