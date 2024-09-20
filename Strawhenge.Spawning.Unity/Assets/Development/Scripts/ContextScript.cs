@@ -1,7 +1,4 @@
 using Strawhenge.Common.Unity;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Strawhenge.Spawning.Unity
@@ -15,16 +12,14 @@ namespace Strawhenge.Spawning.Unity
         {
             var logger = new UnityLogger(gameObject);
             var poolsContainer = new ItemSpawnPoolsContainer(logger);
-            var spawnPointsContainer = new ItemSpawnPointsContainer();
             
             IItemSpawnSourceFactory spawnSourceFactory = _enablePooling
-                ? new PooledItemSpawnSourceFactory(poolsContainer, spawnPointsContainer)
+                ? new PooledItemSpawnSourceFactory(poolsContainer)
                 : new InstantiateItemSpawnSourceFactory();
 
             foreach (var spawnPoint in FindObjectsOfType<ItemSpawnPointScript>())
             {
                 spawnPoint.LayersAccessor = this;
-                spawnPoint.SpawnPointsContainer = spawnPointsContainer;
                 spawnPoint.SpawnSourceFactory = spawnSourceFactory;
             }
 

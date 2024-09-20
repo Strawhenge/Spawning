@@ -24,8 +24,6 @@ namespace Strawhenge.Spawning.Unity
 
         public ILayersAccessor LayersAccessor { private get; set; }
 
-        public ItemSpawnPointsContainer SpawnPointsContainer { private get; set; }
-
         public IItemSpawnSourceFactory SpawnSourceFactory { private get; set; }
 
         public bool IsInPlayerRadius { get; private set; }
@@ -65,9 +63,7 @@ namespace Strawhenge.Spawning.Unity
 
         void Start()
         {
-            SpawnPointsContainer.Add(_spawnCollection, this);
-
-            _spawnSource = SpawnSourceFactory.Create(_spawnCollection);
+            _spawnSource = SpawnSourceFactory.Create(_spawnCollection, this);
         }
 
         [ContextMenu(nameof(Spawn))]

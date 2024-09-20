@@ -20,7 +20,7 @@ namespace Strawhenge.Spawning.Unity
 
         public bool IsLoaded { get; private set; }
 
-        public IReadOnlyList<ItemSpawnPool> GetPool(IReadOnlyList<ItemSpawnScript> prefabs)
+        public IReadOnlyList<ItemSpawnPool> GetPools(IReadOnlyList<ItemSpawnScript> prefabs)
         {
             if (!IsLoaded)
             {

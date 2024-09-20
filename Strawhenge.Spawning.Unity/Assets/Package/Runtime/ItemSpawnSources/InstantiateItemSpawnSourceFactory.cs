@@ -9,10 +9,12 @@ namespace Strawhenge.Spawning.Unity
             ItemSpawnCollectionScriptableObject,
             InstantiateItemSpawnSource> _sourcesBySpawnCollection = new();
 
-        public IItemSpawnSource Create(ItemSpawnCollectionScriptableObject itemSpawnCollection)
+        public IItemSpawnSource Create(
+            ItemSpawnCollectionScriptableObject spawnCollection,
+            ItemSpawnPointScript spawnPoint)
         {
             return _sourcesBySpawnCollection
-                .GetOrAddValue(itemSpawnCollection, () => new InstantiateItemSpawnSource(itemSpawnCollection));
+                .GetOrAddValue(spawnCollection, () => new InstantiateItemSpawnSource(spawnCollection));
         }
     }
 }

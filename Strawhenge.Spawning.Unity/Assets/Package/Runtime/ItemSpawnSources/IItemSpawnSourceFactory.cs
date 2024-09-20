@@ -2,6 +2,8 @@
 {
     public interface IItemSpawnSourceFactory
     {
-        IItemSpawnSource Create(ItemSpawnCollectionScriptableObject itemSpawnCollection);
+        IItemSpawnSource Create(
+            ItemSpawnCollectionScriptableObject spawnCollection,
+            ItemSpawnPointScript spawnPoint);
     }
 }

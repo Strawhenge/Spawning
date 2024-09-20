@@ -6,41 +6,32 @@ namespace Strawhenge.Spawning.Unity
 {
     public class PooledItemSpawnSource : IItemSpawnSource
     {
-        readonly ItemSpawnPointsContainer _itemSpawnPointsContainer;
-        readonly ItemSpawnCollectionScriptableObject _itemSpawnCollection;
-        Maybe<CycleList<ItemSpawnPool>> _pools = Maybe.None<CycleList<ItemSpawnPool>>();
+        readonly CycleList<ItemSpawnPool> _pools;
 
         public PooledItemSpawnSource(
             ItemSpawnPoolsContainer itemSpawnPoolsContainer,
-            ItemSpawnPointsContainer itemSpawnPointsContainer,
             ItemSpawnCollectionScriptableObject itemSpawnCollection)
         {
-            _itemSpawnPointsContainer = itemSpawnPointsContainer;
-            _itemSpawnCollection = itemSpawnCollection;
-            itemSpawnPoolsContainer.Loaded += CreatePoolCycle;
+            _pools = new CycleList<ItemSpawnPool>(predicate: pool => pool.HasAvailableSpawn);
 
-            if (itemSpawnPoolsContainer.IsLoaded)
-                CreatePoolCycle();
+            itemSpawnPoolsContainer.Loaded += OnPoolsLoaded;
 
-            void CreatePoolCycle()
+            void OnPoolsLoaded()
             {
-                itemSpawnPoolsContainer.Loaded -= CreatePoolCycle;
-
-                var pools = itemSpawnPoolsContainer.GetPool(itemSpawnCollection.GetSpawnPrefabs());
-                if (pools.Count > 0)
-                    _pools = new CycleList<ItemSpawnPool>(pools, pool => pool.HasAvailableSpawn);
+                itemSpawnPoolsContainer.Loaded -= OnPoolsLoaded;
+                
+                _pools.Add(
+                    itemSpawnPoolsContainer.GetPools(
+                        itemSpawnCollection.GetSpawnPrefabs()));
             }
         }
 
         public Maybe<ItemSpawnScript> TryGetSpawn(Transform parent)
         {
-            var spawn = _pools.Map(pools => pools
-                    .Next()
-                    .Map(pool => pool.TryGet())
-                    .Flatten())
-                .Flatten()
-                .Map(Maybe.Some)
-                .Reduce(GetFromSpawnPoint);
+            var spawn = _pools
+                .Next()
+                .Map(pool => pool.TryGet())
+                .Flatten();
 
             spawn.Do(spawnScript =>
             {
@@ -50,17 +41,6 @@ namespace Strawhenge.Spawning.Unity
             });
 
             return spawn;
-        }
-
-        Maybe<ItemSpawnScript> GetFromSpawnPoint()
-        {
-            var spawnPoint = _itemSpawnPointsContainer
-                .Get(_itemSpawnCollection)
-                .FirstOrNone(x => x.HasItem && !x.IsInPlayerRadius);
-
-            return spawnPoint
-                .Map(x => x.TakeItem())
-                .Flatten();
         }
     }
 }
