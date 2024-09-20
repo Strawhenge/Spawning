@@ -11,10 +11,19 @@ namespace Strawhenge.Spawning.Unity
 
         public Maybe<ItemSpawnScript> TryGetSpawn(Transform parent)
         {
-            return _spawnPoints
+            var spawn = _spawnPoints
                 .Next()
                 .Map(spawnPoint => spawnPoint.TakeItem())
                 .Flatten();
+
+            spawn.Do(spawnScript =>
+            {
+                spawnScript.transform.parent = parent;
+                spawnScript.transform.SetPositionAndRotation(parent.position, parent.rotation);
+                spawnScript.ResetParts();
+            });
+
+            return spawn;
         }
 
         internal void AddSpawnPoint(ItemSpawnPointScript spawnPoint) => _spawnPoints.Add(spawnPoint);
