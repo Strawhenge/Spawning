@@ -1,4 +1,5 @@
 ﻿using Strawhenge.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,9 +10,32 @@ namespace Strawhenge.Spawning.Unity
     {
         [SerializeField] ItemSpawnPartScript[] _parts;
 
+        readonly List<(ItemSpawnPartScript part, Vector3 position, Quaternion rotation)> _originalPartPositions = new();
         int _despawnCount;
 
+        public event Action Despawned;
+
         public IReadOnlyList<ItemSpawnPartScript> Parts { get; private set; }
+
+        public Action<ItemSpawnScript> DespawnStrategy { private get; set; } =
+            spawn => Debug.LogError($"{nameof(DespawnStrategy)} not set.", spawn);
+
+        public Action<ItemSpawnPartScript> DespawnPartStrategy
+        {
+            set => _parts.ForEach(part => part.DespawnStrategy = value);
+        }
+
+        [ContextMenu(nameof(ResetParts))]
+        public void ResetParts()
+        {
+            foreach (var (part, position, rotation) in _originalPartPositions)
+            {
+                if (part != null)
+                    part.transform.SetLocalPositionAndRotation(position, rotation);
+            }
+        }
+
+        public bool IsInPlayerRadius() => Parts.Any(part => part.IsInPlayerRadius());
 
         void Awake()
         {
@@ -25,18 +49,19 @@ namespace Strawhenge.Spawning.Unity
 
             foreach (var part in Parts)
             {
-                part.transform.parent = null;
-                part.OnDespawn = OnPartDespawned;
+                part.Despawned += OnPartDespawned;
+                _originalPartPositions.Add((part, part.transform.localPosition, part.transform.localRotation));
             }
         }
 
         void OnPartDespawned(ItemSpawnPartScript part)
         {
-            Destroy(part.gameObject);
-
             _despawnCount++;
             if (_despawnCount >= Parts.Count)
-                Destroy(gameObject);
+            {
+                DespawnStrategy(this);
+                Despawned?.Invoke();
+            }
         }
     }
 }

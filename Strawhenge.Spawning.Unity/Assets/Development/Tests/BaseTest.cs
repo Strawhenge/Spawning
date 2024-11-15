@@ -6,13 +6,13 @@ using UnityEngine.TestTools;
 
 namespace Strawhenge.Spawning.Unity.Tests
 {
-    public abstract class BaseTest
+    public abstract class BaseTest<TContext> where TContext : BaseTestContextScript
     {
         [UnitySetUp]
         public IEnumerator LoadScene()
         {
             yield return SceneManager.LoadSceneAsync(SceneName);
-            Context = Object.FindObjectOfType<TestContextScript>();
+            Context = Object.FindObjectOfType<TContext>();
 
             if (Context == null || Context.IsInvalid())
                 Assert.Fail("Test context is invalid.");
@@ -20,6 +20,6 @@ namespace Strawhenge.Spawning.Unity.Tests
 
         protected abstract string SceneName { get; }
 
-        protected TestContextScript Context { get; private set; }
+        protected TContext Context { get; private set; }
     }
 }

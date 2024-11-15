@@ -5,7 +5,7 @@ using UnityEngine.TestTools;
 
 namespace Strawhenge.Spawning.Unity.Tests
 {
-    public class WhenAllSpawnPartsDespawned : BaseTest
+    public class WhenAllSpawnPartsDespawned : BaseTest<TestContextScript>
     {
         protected override string SceneName => SceneNames.ItemSpawnPointTests;
 

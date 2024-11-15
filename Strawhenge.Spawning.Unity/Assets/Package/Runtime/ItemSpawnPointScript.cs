@@ -1,9 +1,8 @@
+using FunctionalUtilities;
 using Strawhenge.Common.Unity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Strawhenge.Spawning.Unity
 {
@@ -18,11 +17,30 @@ namespace Strawhenge.Spawning.Unity
         [SerializeField] Collider _playerTriggerCollider;
 
         readonly List<Collider> _blockingColliders = new();
+        Maybe<ItemSpawnScript> _currentSpawn = Maybe.None<ItemSpawnScript>();
         Transform _point;
-        ItemSpawnScript _currentSpawn;
-        bool _canSpawn;
+        bool _invalidSetup;
+        IItemSpawnSource _spawnSource;
 
         public ILayersAccessor LayersAccessor { private get; set; }
+
+        public IItemSpawnSourceFactory SpawnSourceFactory { private get; set; }
+
+        public bool IsInPlayerRadius { get; private set; }
+
+        public bool HasItem => _currentSpawn.HasSome();
+
+        public Maybe<ItemSpawnScript> TakeItem()
+        {
+            try
+            {
+                return _currentSpawn;
+            }
+            finally
+            {
+                OnCurrentDespawned();
+            }
+        }
 
         void Awake()
         {
@@ -30,19 +48,22 @@ namespace Strawhenge.Spawning.Unity
                 ? _overridePoint
                 : transform;
 
-            _canSpawn = true;
-
             if (_playerTriggerCollider == null)
             {
                 Debug.LogError($"'{nameof(_playerTriggerCollider)}' not set.", this);
-                _canSpawn = false;
+                _invalidSetup = true;
             }
 
             if (_spawnCollection == null)
             {
                 Debug.LogError($"'{nameof(_spawnCollection)}' not set.", this);
-                _canSpawn = false;
+                _invalidSetup = true;
             }
+        }
+
+        void Start()
+        {
+            _spawnSource = SpawnSourceFactory.Create(_spawnCollection, this);
         }
 
         [ContextMenu(nameof(Spawn))]
@@ -53,10 +74,18 @@ namespace Strawhenge.Spawning.Unity
             if (CannotSpawn())
                 return;
 
-            TrySpawnItem();
+            _currentSpawn = _spawnSource.TryGetSpawn(_point);
+            _currentSpawn.Do(
+                spawn => spawn.Despawned += OnCurrentDespawned);
         }
 
-        bool CannotSpawn() => !_canSpawn || _blockingColliders.Any() || _currentSpawn != null;
+        void OnCurrentDespawned()
+        {
+            _currentSpawn.Do(spawn => spawn.Despawned -= OnCurrentDespawned);
+            _currentSpawn = Maybe.None<ItemSpawnScript>();
+        }
+
+        bool CannotSpawn() => _invalidSetup || _blockingColliders.Any() || _currentSpawn.HasSome();
 
         void AssessBlockingColliders()
         {
@@ -67,24 +96,11 @@ namespace Strawhenge.Spawning.Unity
             }
         }
 
-        void TrySpawnItem()
-        {
-            var items = _spawnCollection.Spawns.ToArray();
-
-            if (items.Length == 0)
-                return;
-
-            var prefab = items.Length == 1
-                ? items[0]
-                : items[Random.Range(0, items.Length)];
-
-            _currentSpawn = Instantiate(prefab, _point);
-        }
-
         void OnTriggerEnter(Collider other)
         {
             if (other == _playerTriggerCollider)
             {
+                IsInPlayerRadius = true;
                 Spawn();
             }
             else if (LayersAccessor.BlockingLayerMask.ContainsLayer(other.gameObject.layer))
@@ -97,7 +113,10 @@ namespace Strawhenge.Spawning.Unity
         void OnTriggerExit(Collider other)
         {
             if (other == _playerTriggerCollider)
+            {
+                IsInPlayerRadius = false;
                 return;
+            }
 
             if (_blockingColliders.Contains(other))
                 _blockingColliders.Remove(other);

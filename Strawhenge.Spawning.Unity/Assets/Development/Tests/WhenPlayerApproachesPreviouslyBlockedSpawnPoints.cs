@@ -4,7 +4,7 @@ using UnityEngine.TestTools;
 
 namespace Strawhenge.Spawning.Unity.Tests
 {
-    public class WhenPlayerApproachesPreviouslyBlockedSpawnPoints : BaseTest
+    public class WhenPlayerApproachesPreviouslyBlockedSpawnPoints : BaseTest<TestContextScript>
     {
         protected override string SceneName => SceneNames.ItemSpawnPointTests;
 
@@ -12,7 +12,7 @@ namespace Strawhenge.Spawning.Unity.Tests
         public IEnumerator SpawnPointsShouldSpawn()
         {
             Context.UnblockSpawnPoints();
-            
+
             foreach (var spawnPoint in Context.AllSpawnPoints)
             {
                 Context.MovePlayerTo(spawnPoint);
