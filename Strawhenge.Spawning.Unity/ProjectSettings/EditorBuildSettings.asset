@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Development/Scenes/ItemSpawnPointTests.unity
+    path: Assets/Development/Tests/ItemSpawnPointTests/ItemSpawnPointTests.unity
     guid: 28d29f88c94955c4b83ad46176d2d60e
   - enabled: 1
-    path: Assets/Development/Scenes/ItemSpawnPoolTests.unity
+    path: Assets/Development/Tests/ItemSpawnPoolTests/ItemSpawnPoolTests.unity
     guid: d06ab253ff36d75498ca410562b5b152
   - enabled: 1
-    path: Assets/Development/Scenes/ItemSpawnPlayerRadiusTests.unity
+    path: Assets/Development/Tests/ItemSpawnPlayerRadiusTests/ItemSpawnPlayerRadiusTests.unity
     guid: 22295e9ee2703d340881c4ea3251211a
   m_configObjects: {}
