@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Strawhenge.Spawning.Unity.Tests
+namespace Strawhenge.Spawning.Unity.Tests.ItemSpawnPoolTests
 {
     public class ItemSpawnPoolTests : BaseTest<ItemSpawnPoolTestContextScript>
     {

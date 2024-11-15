@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Strawhenge.Spawning.Unity
+﻿namespace Strawhenge.Spawning.Unity
 {
     public class ItemSpawnSourceFactory : IItemSpawnSourceFactory
     {

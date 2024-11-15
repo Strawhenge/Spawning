@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Strawhenge.Spawning.Unity.Tests
+namespace Strawhenge.Spawning.Unity.Tests.ItemSpawnPoolTests
 {
     public class ItemSpawnPoolTestContextScript : BaseTestContextScript
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Strawhenge.Spawning.Unity.Tests
+namespace Strawhenge.Spawning.Unity.Tests.ItemSpawnPlayerRadiusTests
 {
     public class ItemSpawnPlayerRadiusTestsContextScript : BaseTestContextScript
     {

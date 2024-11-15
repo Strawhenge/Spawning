@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Strawhenge.Spawning.Unity.Tests
+namespace Strawhenge.Spawning.Unity.Tests.ItemSpawnPointTests
 {
     public class WhenPlayerNotNearSpawnPoints : BaseTest<TestContextScript>
     {

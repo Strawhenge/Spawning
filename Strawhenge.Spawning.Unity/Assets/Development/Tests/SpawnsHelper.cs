@@ -1,7 +1,5 @@
 ﻿using NUnit.Framework;
 using Strawhenge.Common;
-using Strawhenge.Spawning.Unity;
-using System;
 using System.Linq;
 using Object = UnityEngine.Object;
 

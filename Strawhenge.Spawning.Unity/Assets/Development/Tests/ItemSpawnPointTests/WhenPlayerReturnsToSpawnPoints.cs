@@ -1,31 +1,31 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Strawhenge.Spawning.Unity.Tests
+namespace Strawhenge.Spawning.Unity.Tests.ItemSpawnPointTests
 {
-    public class WhenPlayerReturnsToDespawnedSpawnPoints : BaseTest<TestContextScript>
+    public class WhenPlayerReturnsToSpawnPoints : BaseTest<TestContextScript>
     {
         protected override string SceneName => SceneNames.ItemSpawnPointTests;
 
         [UnityTest]
-        public IEnumerator SpawnPointsShouldRespawn()
+        public IEnumerator SpawnPointsShouldNotSpawnAgain()
         {
             foreach (var spawnPoint in Context.UnblockedSpawnPoints)
             {
                 Context.MovePlayerTo(spawnPoint);
                 yield return new WaitForFixedUpdate();
             }
-           
-            SpawnsHelper.DespawnHalf();
-            
+
+            var numberOfSpawns = SpawnsHelper.GetNumberOfSpawns();
+
             foreach (var spawnPoint in Context.UnblockedSpawnPoints)
             {
                 Context.MovePlayerTo(spawnPoint);
                 yield return new WaitForFixedUpdate();
+
+                SpawnsHelper.VerifyNumberOfSpawns(numberOfSpawns);
             }
-            
-            SpawnsHelper.VerifyNumberOfSpawns(Context.UnblockedSpawnPoints.Length);
         }
     }
 }

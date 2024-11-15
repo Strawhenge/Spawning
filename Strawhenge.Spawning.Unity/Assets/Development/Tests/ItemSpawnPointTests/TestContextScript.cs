@@ -1,10 +1,9 @@
 using NUnit.Framework;
 using Strawhenge.Common;
-using System;
 using System.Linq;
 using UnityEngine;
 
-namespace Strawhenge.Spawning.Unity.Tests
+namespace Strawhenge.Spawning.Unity.Tests.ItemSpawnPointTests
 {
     public class TestContextScript : BaseTestContextScript, ILayersAccessor
     {

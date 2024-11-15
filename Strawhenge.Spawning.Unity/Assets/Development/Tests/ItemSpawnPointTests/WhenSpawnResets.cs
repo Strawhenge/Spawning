@@ -2,9 +2,8 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.TestTools;
-using UnityEngine.Assertions;
 
-namespace Strawhenge.Spawning.Unity.Tests
+namespace Strawhenge.Spawning.Unity.Tests.ItemSpawnPointTests
 {
     public class WhenSpawnResets : BaseTest<TestContextScript>
     {
