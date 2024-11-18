@@ -1,0 +1,37 @@
+name: Release
+
+on:
+  workflow_dispatch:  
+  
+env:
+  VERSION: 1.0.${{ github.run_number }}
+        
+jobs: 
+  Release:    
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2   
+        
+    - name: Release Unity Package
+      run: |
+          git --version
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          git checkout -b ${{ env.TEMP_BRANCH }}
+          
+          $package = Get-Content 'Strawhenge.Spawning.Unity\Assets\Package\package.json' -raw | ConvertFrom-Json
+          $package.version = '${{ env.VERSION }}'
+          $package | ConvertTo-Json | set-content 'Strawhenge.Spawning.Unity\Assets\Package\package.json'
+                
+          git add Strawhenge.Spawning.Unity\Assets\Package\package.json
+        
+          git commit -m 'Prepare Release ${{ env.VERSION }}'
+          git push --set-upstream origin ${{ env.TEMP_BRANCH }}
+          
+          git push --delete origin release
+          git checkout -b release
+          git push --set-upstream origin release
+          git push --delete origin ${{ env.TEMP_BRANCH }}
+      env:
+          TEMP_BRANCH: temp-${{ github.run_number }}
