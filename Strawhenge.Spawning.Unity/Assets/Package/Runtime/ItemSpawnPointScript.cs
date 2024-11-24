@@ -1,5 +1,6 @@
 using FunctionalUtilities;
 using Strawhenge.Common.Unity;
+using Strawhenge.Common.Unity.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -48,14 +49,7 @@ namespace Strawhenge.Spawning.Unity
                 ? _overridePoint
                 : transform;
 
-            if (_playerTrigger == null)
-            {
-                Debug.LogWarning($"'{nameof(_playerTrigger)}' not set. Finding in scene.", this);
-                _playerTrigger = FindObjectOfType<PlayerItemSpawnRadiusScript>();
-
-                if (_playerTrigger == null)
-                    Debug.LogError($"'{nameof(_playerTrigger)}' not found in scene.", this);
-            }
+            ComponentRefHelper.EnsureSceneComponent(ref _playerTrigger, nameof(_playerTrigger), this);
 
             if (_spawnCollection == null)
                 Debug.LogError($"'{nameof(_spawnCollection)}' not set.", this);
@@ -69,8 +63,6 @@ namespace Strawhenge.Spawning.Unity
         [ContextMenu(nameof(Spawn))]
         public void Spawn()
         {
-            AssessBlockingColliders();
-
             if (CannotSpawn())
                 return;
 
@@ -100,15 +92,11 @@ namespace Strawhenge.Spawning.Unity
             _currentSpawn = Maybe.None<ItemSpawnScript>();
         }
 
-        bool CannotSpawn() => _blockingColliders.Any() || _currentSpawn.HasSome();
-
-        void AssessBlockingColliders()
+        bool CannotSpawn()
         {
-            for (var i = 0; i < _blockingColliders.Count; i++)
-            {
-                if (_blockingColliders[i] == null)
-                    _blockingColliders.RemoveAt(i);
-            }
+            _blockingColliders.RemoveDestroyed();
+            
+            return _blockingColliders.Any() || _currentSpawn.HasSome();
         }
 
         void OnTriggerEnter(Collider other)
