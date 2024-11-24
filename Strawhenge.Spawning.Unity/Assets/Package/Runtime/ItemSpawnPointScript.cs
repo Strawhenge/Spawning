@@ -16,7 +16,7 @@ namespace Strawhenge.Spawning.Unity
         Transform _overridePoint;
 
         [SerializeField] bool _randomizeDirection;
-        [SerializeField] PlayerItemSpawnRadiusScript _playerTrigger;
+        [SerializeField] PlayerRadiusScript _playerTrigger;
 
         readonly List<Collider> _blockingColliders = new();
         Maybe<ItemSpawnScript> _currentSpawn = Maybe.None<ItemSpawnScript>();
