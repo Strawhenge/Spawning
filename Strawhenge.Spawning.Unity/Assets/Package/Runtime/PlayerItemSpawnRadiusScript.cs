@@ -1,29 +1,20 @@
+using Strawhenge.Common.Unity;
 using UnityEngine;
 
 namespace Strawhenge.Spawning.Unity
 {
     public class PlayerItemSpawnRadiusScript : MonoBehaviour
     {
-        [SerializeField] SphereCollider _collider;
-
-        float _radius;
+        [SerializeField, Min(1)] float _radius = 25;
 
         void Awake()
         {
-            if (_collider == null)
-            {
-                Debug.LogWarning($"'{nameof(_collider)}' not set. Getting from GameObject.", this);
+            var rigidBody = this.GetOrAddComponent<Rigidbody>();
+            rigidBody.isKinematic = true;
 
-                _collider = GetComponent<SphereCollider>();
-                if (_collider == null)
-                {
-                    Debug.LogWarning($"'{nameof(_collider)}' missing.", this);
-                    return;
-                }
-            }
-
-            _radius = _collider.radius * Mathf.Max(transform.lossyScale.x, transform.lossyScale.z);
-            Debug.Log($"Player item spawn radius: {_radius}", this);
+            var collider = this.GetOrAddComponent<SphereCollider>();
+            collider.isTrigger = true;
+            collider.radius = _radius / Mathf.Max(transform.lossyScale.x, transform.lossyScale.z);
         }
 
         internal bool IsInRadius(Transform transform)

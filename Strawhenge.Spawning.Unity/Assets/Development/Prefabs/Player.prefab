@@ -262,4 +262,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfe4751b47a445f4495ce734651c3c29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collider: {fileID: 6708558227062698312}
+  _radius: 25
