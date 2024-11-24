@@ -14,7 +14,7 @@ namespace Strawhenge.Spawning.Unity
              "Optional. Sets the position and orientation of the spawned items (otherwise uses 'this' transform).")]
         Transform _overridePoint;
 
-        [SerializeField] Collider _playerTriggerCollider;
+        [SerializeField] PlayerItemSpawnRadiusScript _playerTrigger;
 
         readonly List<Collider> _blockingColliders = new();
         Maybe<ItemSpawnScript> _currentSpawn = Maybe.None<ItemSpawnScript>();
@@ -48,10 +48,16 @@ namespace Strawhenge.Spawning.Unity
                 ? _overridePoint
                 : transform;
 
-            if (_playerTriggerCollider == null)
+            if (_playerTrigger == null)
             {
-                Debug.LogError($"'{nameof(_playerTriggerCollider)}' not set.", this);
-                _invalidSetup = true;
+                Debug.LogWarning($"'{nameof(_playerTrigger)}' not set. Finding in scene.", this);
+                _playerTrigger = FindObjectOfType<PlayerItemSpawnRadiusScript>();
+
+                if (_playerTrigger == null)
+                {
+                    _invalidSetup = true;
+                    Debug.LogError($"'{nameof(_playerTrigger)}' not found in scene.", this);
+                }
             }
 
             if (_spawnCollection == null)
@@ -98,12 +104,14 @@ namespace Strawhenge.Spawning.Unity
 
         void OnTriggerEnter(Collider other)
         {
-            if (other == _playerTriggerCollider)
+            if (other.gameObject == _playerTrigger.gameObject)
             {
                 IsInPlayerRadius = true;
                 Spawn();
+                return;
             }
-            else if (LayersAccessor.BlockingLayerMask.ContainsLayer(other.gameObject.layer))
+
+            if (LayersAccessor.BlockingLayerMask.ContainsLayer(other.gameObject.layer))
             {
                 if (!_blockingColliders.Contains(other))
                     _blockingColliders.Add(other);
@@ -112,7 +120,7 @@ namespace Strawhenge.Spawning.Unity
 
         void OnTriggerExit(Collider other)
         {
-            if (other == _playerTriggerCollider)
+            if (other.gameObject == _playerTrigger.gameObject)
             {
                 IsInPlayerRadius = false;
                 return;
