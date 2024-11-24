@@ -4,7 +4,7 @@ using System;
 using UnityEngine.Pool;
 using Object = UnityEngine.Object;
 
-namespace Strawhenge.Spawning.Unity
+namespace Strawhenge.Spawning.Unity.Items
 {
     public class ItemSpawnPool
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Strawhenge.Spawning.Unity
+namespace Strawhenge.Spawning.Unity.Items
 {
     [CreateAssetMenu(menuName = "Strawhenge/Spawning/Item Spawn Pool")]
     public class ItemSpawnPoolScriptableObject : ScriptableObject

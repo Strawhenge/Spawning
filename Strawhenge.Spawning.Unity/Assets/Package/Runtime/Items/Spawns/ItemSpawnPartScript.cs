@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Strawhenge.Spawning.Unity
+namespace Strawhenge.Spawning.Unity.Items
 {
     public class ItemSpawnPartScript : MonoBehaviour
     {

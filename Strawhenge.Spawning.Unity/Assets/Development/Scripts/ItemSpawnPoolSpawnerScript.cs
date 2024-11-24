@@ -1,4 +1,4 @@
-﻿using Strawhenge.Spawning.Unity;
+﻿using Strawhenge.Spawning.Unity.Items;
 using UnityEngine;
 
 namespace Development.Scripts

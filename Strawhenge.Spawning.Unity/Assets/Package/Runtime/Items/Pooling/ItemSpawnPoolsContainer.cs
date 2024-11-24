@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Strawhenge.Spawning.Unity
+namespace Strawhenge.Spawning.Unity.Items
 {
     public class ItemSpawnPoolsContainer
     {

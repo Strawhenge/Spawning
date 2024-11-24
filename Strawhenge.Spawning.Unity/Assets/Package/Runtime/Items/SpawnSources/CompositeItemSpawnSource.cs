@@ -1,7 +1,6 @@
 ﻿using FunctionalUtilities;
-using UnityEngine;
 
-namespace Strawhenge.Spawning.Unity
+namespace Strawhenge.Spawning.Unity.Items
 {
     public class CompositeItemSpawnSource : IItemSpawnSource
     {

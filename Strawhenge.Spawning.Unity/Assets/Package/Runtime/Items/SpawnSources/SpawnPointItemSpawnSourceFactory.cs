@@ -1,7 +1,7 @@
 ﻿using Strawhenge.Common;
 using System.Collections.Generic;
 
-namespace Strawhenge.Spawning.Unity
+namespace Strawhenge.Spawning.Unity.Items
 {
     public class SpawnPointItemSpawnSourceFactory : IItemSpawnSourceFactory
     {

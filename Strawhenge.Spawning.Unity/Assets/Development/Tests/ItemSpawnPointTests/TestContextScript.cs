@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using Strawhenge.Common;
+using Strawhenge.Spawning.Unity.Items;
 using System.Linq;
 using UnityEngine;
 

@@ -1,3 +1,4 @@
+using Strawhenge.Spawning.Unity.Items;
 using UnityEngine;
 
 namespace Strawhenge.Spawning.Unity.Tests.ItemSpawnPoolTests

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Strawhenge.Spawning.Unity
+namespace Strawhenge.Spawning.Unity.Items
 {
     public class ItemSpawnPointScript : MonoBehaviour
     {
@@ -95,7 +95,7 @@ namespace Strawhenge.Spawning.Unity
         bool CannotSpawn()
         {
             _blockingColliders.RemoveDestroyed();
-            
+
             return _blockingColliders.Any() || _currentSpawn.HasSome();
         }
 
