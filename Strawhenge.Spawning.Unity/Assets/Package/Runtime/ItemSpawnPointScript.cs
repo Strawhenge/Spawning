@@ -19,7 +19,6 @@ namespace Strawhenge.Spawning.Unity
         readonly List<Collider> _blockingColliders = new();
         Maybe<ItemSpawnScript> _currentSpawn = Maybe.None<ItemSpawnScript>();
         Transform _point;
-        bool _invalidSetup;
         IItemSpawnSource _spawnSource;
 
         public ILayersAccessor LayersAccessor { private get; set; }
@@ -54,17 +53,11 @@ namespace Strawhenge.Spawning.Unity
                 _playerTrigger = FindObjectOfType<PlayerItemSpawnRadiusScript>();
 
                 if (_playerTrigger == null)
-                {
-                    _invalidSetup = true;
                     Debug.LogError($"'{nameof(_playerTrigger)}' not found in scene.", this);
-                }
             }
 
             if (_spawnCollection == null)
-            {
                 Debug.LogError($"'{nameof(_spawnCollection)}' not set.", this);
-                _invalidSetup = true;
-            }
         }
 
         void Start()
@@ -91,7 +84,7 @@ namespace Strawhenge.Spawning.Unity
             _currentSpawn = Maybe.None<ItemSpawnScript>();
         }
 
-        bool CannotSpawn() => _invalidSetup || _blockingColliders.Any() || _currentSpawn.HasSome();
+        bool CannotSpawn() => _blockingColliders.Any() || _currentSpawn.HasSome();
 
         void AssessBlockingColliders()
         {
