@@ -9,18 +9,13 @@ namespace Strawhenge.Spawning.Unity
         readonly CycleList<ItemSpawnPointScript> _spawnPoints = new(
             predicate: spawnPoint => spawnPoint.HasItem && !spawnPoint.IsInPlayerRadius);
 
-        public Maybe<ItemSpawnScript> TryGetSpawn(Transform parent)
+        public Maybe<ItemSpawnScript> TryGetSpawn()
         {
             return _spawnPoints
                 .Next()
                 .Map(spawnPoint => spawnPoint.TakeItem())
                 .Flatten()
-                .Do(spawnScript =>
-                {
-                    spawnScript.transform.parent = parent;
-                    spawnScript.transform.SetPositionAndRotation(parent.position, parent.rotation);
-                    spawnScript.ResetParts();
-                });
+                .Do(spawnScript => spawnScript.ResetParts());
         }
 
         internal void AddSpawnPoint(ItemSpawnPointScript spawnPoint) => _spawnPoints.Add(spawnPoint);

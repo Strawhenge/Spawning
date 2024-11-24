@@ -26,17 +26,12 @@ namespace Strawhenge.Spawning.Unity
             }
         }
 
-        public Maybe<ItemSpawnScript> TryGetSpawn(Transform parent)
+        public Maybe<ItemSpawnScript> TryGetSpawn()
         {
             return _pools
                 .Next()
                 .Map(pool => pool.TryGet())
-                .Flatten()
-                .Do(spawnScript =>
-                {
-                    spawnScript.transform.parent = parent;
-                    spawnScript.transform.SetPositionAndRotation(parent.position, parent.rotation);
-                });
+                .Flatten();
         }
     }
 }

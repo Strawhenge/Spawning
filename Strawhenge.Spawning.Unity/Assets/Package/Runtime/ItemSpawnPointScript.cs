@@ -14,6 +14,7 @@ namespace Strawhenge.Spawning.Unity
              "Optional. Sets the position and orientation of the spawned items (otherwise uses 'this' transform).")]
         Transform _overridePoint;
 
+        [SerializeField] bool _randomizeDirection;
         [SerializeField] PlayerItemSpawnRadiusScript _playerTrigger;
 
         readonly List<Collider> _blockingColliders = new();
@@ -73,9 +74,24 @@ namespace Strawhenge.Spawning.Unity
             if (CannotSpawn())
                 return;
 
-            _currentSpawn = _spawnSource.TryGetSpawn(_point);
-            _currentSpawn.Do(
-                spawn => spawn.Despawned += OnCurrentDespawned);
+            _currentSpawn = _spawnSource.TryGetSpawn();
+            _currentSpawn
+                .Do(spawn =>
+                {
+                    SetSpawnPosition(spawn);
+                    spawn.Despawned += OnCurrentDespawned;
+                });
+        }
+
+        void SetSpawnPosition(ItemSpawnScript spawn)
+        {
+            spawn.transform.SetParent(_point);
+
+            var rotation = _randomizeDirection
+                ? Quaternion.AngleAxis(Random.Range(0, 360), Vector3.up)
+                : _point.rotation;
+
+            spawn.transform.SetPositionAndRotation(_point.position, rotation);
         }
 
         void OnCurrentDespawned()

@@ -12,11 +12,11 @@ namespace Strawhenge.Spawning.Unity
             _sources = sources;
         }
 
-        public Maybe<ItemSpawnScript> TryGetSpawn(Transform parent)
+        public Maybe<ItemSpawnScript> TryGetSpawn()
         {
             foreach (var source in _sources)
             {
-                if (source.TryGetSpawn(parent).HasSome(out var spawn))
+                if (source.TryGetSpawn().HasSome(out var spawn))
                     return spawn;
             }
 
