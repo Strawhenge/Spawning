@@ -8,7 +8,7 @@ namespace Strawhenge.Spawning.Unity.Items
     {
         readonly IReadOnlyList<ItemSpawnScript> _prefabs;
 
-        public InstantiateItemSpawnSource(IItemSpawnCollection spawnCollection)
+        public InstantiateItemSpawnSource(ItemSpawnCollectionScriptableObject spawnCollection)
         {
             _prefabs = spawnCollection.GetSpawnPrefabs();
         }

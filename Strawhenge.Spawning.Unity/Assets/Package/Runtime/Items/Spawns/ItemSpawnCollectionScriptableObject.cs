@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Strawhenge.Spawning.Unity.Items
 {
     [CreateAssetMenu(menuName = "Strawhenge/Spawning/Item Spawn Collection")]
-    public class ItemSpawnCollectionScriptableObject : ScriptableObject, IItemSpawnCollection
+    public class ItemSpawnCollectionScriptableObject : ScriptableObject
     {
         [SerializeField] ItemSpawnScript[] _spawns;
 
