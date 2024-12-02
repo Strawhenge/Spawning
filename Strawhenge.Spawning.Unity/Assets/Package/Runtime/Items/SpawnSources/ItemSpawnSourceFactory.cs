@@ -13,7 +13,8 @@
             _spawnPointItemSpawnSourceFactory = spawnPointItemSpawnSourceFactory;
         }
 
-        public IItemSpawnSource Create(ItemSpawnCollectionScriptableObject spawnCollection,
+        public IItemSpawnSource Create(
+            IItemSpawnCollection spawnCollection,
             ItemSpawnPointScript spawnPoint)
         {
             return new CompositeItemSpawnSource(

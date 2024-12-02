@@ -979,6 +979,10 @@ PrefabInstance:
       propertyPath: _playerTriggerCollider
       value: 
       objectReference: {fileID: 1887692545}
+    - target: {fileID: 9190130153899239694, guid: 284223f3ff800104388b02343cc58787, type: 3}
+      propertyPath: _spawnCollection._scriptableObject
+      value: 
+      objectReference: {fileID: 11400000, guid: 0b4344dd90e35524ca2b9264867910cd, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 284223f3ff800104388b02343cc58787, type: 3}
 --- !u!1001 &6708558225192212041

@@ -3,7 +3,7 @@
     public interface IItemSpawnSourceFactory
     {
         IItemSpawnSource Create(
-            ItemSpawnCollectionScriptableObject spawnCollection,
+            IItemSpawnCollection spawnCollection,
             ItemSpawnPointScript spawnPoint);
     }
 }

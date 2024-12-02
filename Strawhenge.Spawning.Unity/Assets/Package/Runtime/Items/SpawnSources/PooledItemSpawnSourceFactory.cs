@@ -6,7 +6,7 @@ namespace Strawhenge.Spawning.Unity.Items
     public class PooledItemSpawnSourceFactory : IItemSpawnSourceFactory
     {
         readonly ItemSpawnPoolsContainer _poolsContainer;
-        readonly Dictionary<ItemSpawnCollectionScriptableObject, IItemSpawnSource> _sourcesBySpawnCollection = new();
+        readonly Dictionary<IItemSpawnCollection, IItemSpawnSource> _sourcesBySpawnCollection = new();
 
         public PooledItemSpawnSourceFactory(ItemSpawnPoolsContainer poolsContainer)
         {
@@ -14,7 +14,7 @@ namespace Strawhenge.Spawning.Unity.Items
         }
 
         public IItemSpawnSource Create(
-            ItemSpawnCollectionScriptableObject spawnCollection,
+            IItemSpawnCollection spawnCollection,
             ItemSpawnPointScript spawnPoint)
         {
             return _sourcesBySpawnCollection.GetOrAddValue(

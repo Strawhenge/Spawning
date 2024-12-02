@@ -1,6 +1,7 @@
 using FunctionalUtilities;
 using Strawhenge.Common.Unity;
 using Strawhenge.Common.Unity.Helpers;
+using Strawhenge.Common.Unity.Serialization;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,7 +10,9 @@ namespace Strawhenge.Spawning.Unity.Items
 {
     public class ItemSpawnPointScript : MonoBehaviour
     {
-        [SerializeField] ItemSpawnCollectionScriptableObject _spawnCollection;
+        [SerializeField] SerializedSource<
+                IItemSpawnCollection, SerializedItemSpawnCollection, ItemSpawnCollectionScriptableObject>
+            _spawnCollection;
 
         [SerializeField, Tooltip(
              "Optional. Sets the position and orientation of the spawned items (otherwise uses 'this' transform).")]
@@ -57,7 +60,7 @@ namespace Strawhenge.Spawning.Unity.Items
 
         void Start()
         {
-            _spawnSource = SpawnSourceFactory.Create(_spawnCollection, this);
+            _spawnSource = SpawnSourceFactory.Create(_spawnCollection.GetValue(), this);
         }
 
         [ContextMenu(nameof(Spawn))]
