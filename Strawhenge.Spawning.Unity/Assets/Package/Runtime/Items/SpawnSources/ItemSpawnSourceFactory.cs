@@ -19,5 +19,11 @@
                 _pooledItemSpawnSourceFactory.Create(spawnCollection),
                 _spawnPointItemSpawnSourceFactory.Create(spawnCollection, spawnPoint));
         }
+
+        public void Reset()
+        {
+            _pooledItemSpawnSourceFactory.Reset();
+            _spawnPointItemSpawnSourceFactory.Reset();
+        }
     }
 }

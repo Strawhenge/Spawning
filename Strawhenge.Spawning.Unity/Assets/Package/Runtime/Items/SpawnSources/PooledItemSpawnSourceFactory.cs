@@ -20,5 +20,11 @@ namespace Strawhenge.Spawning.Unity.Items
                 spawnCollection,
                 () => new PooledItemSpawnSource(_poolsContainer, spawnCollection));
         }
+
+        public void Reset()
+        {
+            _poolsContainer.Clear();
+            _sourcesBySpawnCollection.Clear();
+        }
     }
 }

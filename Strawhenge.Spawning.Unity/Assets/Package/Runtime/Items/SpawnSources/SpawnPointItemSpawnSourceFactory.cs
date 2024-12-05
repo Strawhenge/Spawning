@@ -19,5 +19,10 @@ namespace Strawhenge.Spawning.Unity.Items
 
             return source;
         }
+
+        public void Reset()
+        {
+            _sourcesBySpawnCollection.Clear();
+        }
     }
 }
