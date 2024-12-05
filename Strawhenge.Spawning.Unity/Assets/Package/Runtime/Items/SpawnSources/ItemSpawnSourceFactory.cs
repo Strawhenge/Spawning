@@ -13,11 +13,12 @@
             _spawnPointItemSpawnSourceFactory = spawnPointItemSpawnSourceFactory;
         }
 
-        public IItemSpawnSource Create(ItemSpawnCollectionScriptableObject spawnCollection,
+        public IItemSpawnSource Create(
+            ItemSpawnCollectionScriptableObject spawnCollection,
             ItemSpawnPointScript spawnPoint)
         {
             return new ItemSpawnSource(
-                _pooledItemSpawnSourceFactory.Create(spawnCollection, spawnPoint),
+                _pooledItemSpawnSourceFactory.Create(spawnCollection),
                 _spawnPointItemSpawnSourceFactory.Create(spawnCollection, spawnPoint));
         }
     }

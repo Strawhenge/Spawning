@@ -15,10 +15,8 @@ namespace Strawhenge.Spawning.Unity.Items
 
         public Maybe<ItemSpawnScript> TryGetSpawn()
         {
-            return _pooledSource
-                .TryGetSpawn()
-                .Map<Maybe<ItemSpawnScript>>(x => x)
-                .Reduce(_spawnPointSource.TryGetSpawn);
+            return _pooledSource.TryGetSpawn()
+                .Combine(() => _spawnPointSource.TryGetSpawn());
         }
     }
 }

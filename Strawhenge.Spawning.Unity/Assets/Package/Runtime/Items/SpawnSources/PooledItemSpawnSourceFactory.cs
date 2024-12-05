@@ -14,8 +14,7 @@ namespace Strawhenge.Spawning.Unity.Items
         }
 
         public PooledItemSpawnSource Create(
-            ItemSpawnCollectionScriptableObject spawnCollection,
-            ItemSpawnPointScript spawnPoint)
+            ItemSpawnCollectionScriptableObject spawnCollection)
         {
             return _sourcesBySpawnCollection.GetOrAddValue(
                 spawnCollection,
