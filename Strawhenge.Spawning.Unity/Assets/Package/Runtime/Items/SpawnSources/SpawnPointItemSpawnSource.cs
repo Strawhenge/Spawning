@@ -3,7 +3,7 @@ using Strawhenge.Common.Collections;
 
 namespace Strawhenge.Spawning.Unity.Items
 {
-    public class SpawnPointItemSpawnSource : IItemSpawnSource
+    class SpawnPointItemSpawnSource : IItemSpawnSource
     {
         readonly CycleList<ItemSpawnPointScript> _spawnPoints = new(
             predicate: spawnPoint => spawnPoint.HasItem && !spawnPoint.IsInPlayerRadius);

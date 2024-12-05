@@ -3,7 +3,7 @@ using Strawhenge.Common.Collections;
 
 namespace Strawhenge.Spawning.Unity.Items
 {
-    public class PooledItemSpawnSource : IItemSpawnSource
+    class PooledItemSpawnSource : IItemSpawnSource
     {
         readonly CycleList<ItemSpawnPool> _pools;
 

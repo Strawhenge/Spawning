@@ -7,7 +7,7 @@ namespace Strawhenge.Spawning.Unity.Items
         readonly PooledItemSpawnSource _pooledSource;
         readonly SpawnPointItemSpawnSource _spawnPointSource;
 
-        public ItemSpawnSource(PooledItemSpawnSource pooledSource, SpawnPointItemSpawnSource spawnPointSource)
+        internal ItemSpawnSource(PooledItemSpawnSource pooledSource, SpawnPointItemSpawnSource spawnPointSource)
         {
             _pooledSource = pooledSource;
             _spawnPointSource = spawnPointSource;
