@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Strawhenge.Spawning.Unity.Items
 {
-    public class PooledItemSpawnSourceFactory
+    class PooledItemSpawnSourceFactory
     {
         readonly ItemSpawnPoolsContainer _poolsContainer;
         readonly Dictionary<ItemSpawnCollectionScriptableObject, PooledItemSpawnSource> _sourcesBySpawnCollection = new();

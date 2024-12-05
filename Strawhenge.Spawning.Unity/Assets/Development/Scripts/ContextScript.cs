@@ -15,9 +15,7 @@ namespace Strawhenge.Spawning.Unity
             var poolsContainer = new ItemSpawnPoolsContainer(logger);
 
             IItemSpawnSourceFactory spawnSourceFactory = _enablePooling
-                ? new ItemSpawnSourceFactory(
-                    new PooledItemSpawnSourceFactory(poolsContainer),
-                    new SpawnPointItemSpawnSourceFactory())
+                ? new ItemSpawnSourceFactory(poolsContainer)
                 : new InstantiateItemSpawnSourceFactory();
 
             foreach (var spawnPoint in FindObjectsOfType<ItemSpawnPointScript>())

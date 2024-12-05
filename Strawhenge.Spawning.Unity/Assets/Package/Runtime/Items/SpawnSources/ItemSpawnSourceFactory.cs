@@ -5,12 +5,10 @@
         readonly PooledItemSpawnSourceFactory _pooledItemSpawnSourceFactory;
         readonly SpawnPointItemSpawnSourceFactory _spawnPointItemSpawnSourceFactory;
 
-        public ItemSpawnSourceFactory(
-            PooledItemSpawnSourceFactory pooledItemSpawnSourceFactory,
-            SpawnPointItemSpawnSourceFactory spawnPointItemSpawnSourceFactory)
+        public ItemSpawnSourceFactory(ItemSpawnPoolsContainer spawnPoolsContainer)
         {
-            _pooledItemSpawnSourceFactory = pooledItemSpawnSourceFactory;
-            _spawnPointItemSpawnSourceFactory = spawnPointItemSpawnSourceFactory;
+            _pooledItemSpawnSourceFactory = new PooledItemSpawnSourceFactory(spawnPoolsContainer);
+            _spawnPointItemSpawnSourceFactory = new SpawnPointItemSpawnSourceFactory();
         }
 
         public IItemSpawnSource Create(
