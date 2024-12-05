@@ -16,7 +16,7 @@
         public IItemSpawnSource Create(ItemSpawnCollectionScriptableObject spawnCollection,
             ItemSpawnPointScript spawnPoint)
         {
-            return new CompositeItemSpawnSource(
+            return new ItemSpawnSource(
                 _pooledItemSpawnSourceFactory.Create(spawnCollection, spawnPoint),
                 _spawnPointItemSpawnSourceFactory.Create(spawnCollection, spawnPoint));
         }
