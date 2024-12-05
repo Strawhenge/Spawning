@@ -13,12 +13,19 @@ namespace Strawhenge.Spawning.Unity.Items
         {
             _pools = new CycleList<ItemSpawnPool>(predicate: pool => pool.HasAvailableSpawn);
 
-            itemSpawnPoolsContainer.Loaded += OnPoolsLoaded;
+            if (itemSpawnPoolsContainer.IsLoaded)
+                AddPools();
+            else
+                itemSpawnPoolsContainer.Loaded += OnPoolsLoaded;
 
             void OnPoolsLoaded()
             {
                 itemSpawnPoolsContainer.Loaded -= OnPoolsLoaded;
+                AddPools();
+            }
 
+            void AddPools()
+            {
                 _pools.Add(
                     itemSpawnPoolsContainer.GetPools(
                         itemSpawnCollection.GetSpawnPrefabs()));
