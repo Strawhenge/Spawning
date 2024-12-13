@@ -30,8 +30,10 @@ namespace Strawhenge.Spawning.Unity.Items
         {
             foreach (var (part, position, rotation) in _originalPartPositions)
             {
-                if (part != null)
-                    part.transform.SetLocalPositionAndRotation(position, rotation);
+                if (part == null) continue;
+
+                part.gameObject.SetActive(true);
+                part.transform.SetLocalPositionAndRotation(position, rotation);
             }
         }
 
