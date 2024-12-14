@@ -7,7 +7,7 @@
       "dependencies": {
         "com.strawhenge.functionalutilities": "https://github.com/Strawhenge/FunctionalUtilities.git?path=/Package#release"
       },
-      "hash": "4d4bb10da674bf61bd6c6da18bd5c4e8ee98db9f"
+      "hash": "126a13bbbc336ec019be481172ca87229df37c5d"
     },
     "com.strawhenge.functionalutilities": {
       "version": "https://github.com/Strawhenge/FunctionalUtilities.git?path=/Package#release",
