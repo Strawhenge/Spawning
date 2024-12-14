@@ -28,10 +28,8 @@ namespace Strawhenge.Spawning.Unity.Editor
 
             for (var i = 0; i < property.arraySize; i++)
             {
-                var part = Instantiate(_parts[i], spawn.transform);
-                part.gameObject.name = _parts[i].name;
-
-                property.GetArrayElementAtIndex(i).objectReferenceValue = part;
+                property.GetArrayElementAtIndex(i).objectReferenceValue =
+                    PrefabUtility.InstantiatePrefab(_parts[i], spawn.transform);
             }
 
             serialized.ApplyModifiedProperties();
