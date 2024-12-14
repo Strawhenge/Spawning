@@ -8,6 +8,8 @@ namespace Strawhenge.Spawning.Unity.Items
 {
     public class ItemSpawnScript : MonoBehaviour
     {
+        internal static string PartsFieldName => nameof(_parts);
+        
         [SerializeField] ItemSpawnPartScript[] _parts;
 
         readonly List<(ItemSpawnPartScript part, Vector3 position, Quaternion rotation)> _originalPartPositions = new();
