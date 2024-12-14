@@ -1,7 +1,7 @@
 ﻿using Strawhenge.Spawning.Unity;
 using UnityEngine;
 
-namespace Strawhenge.Main.Unity.Spawning
+namespace Strawhenge.Spawning.Unity.Peds
 {
     public class PedPlacement : IPedPlacement
     {

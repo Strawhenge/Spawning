@@ -3,7 +3,7 @@ using UnityEngine;
 using Strawhenge.Common;
 using Strawhenge.Common.Unity;
 
-namespace Strawhenge.Spawning.Unity.FixedPedSpawns
+namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
 {
     public class FixedSpawnPointScript : MonoBehaviour
     {

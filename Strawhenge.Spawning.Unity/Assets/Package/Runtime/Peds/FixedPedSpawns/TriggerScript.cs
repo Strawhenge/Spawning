@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Strawhenge.Spawning.Unity.FixedPedSpawns
+namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
 {
     public class TriggerScript : MonoBehaviour
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using static UnityEngine.Random;
 
-namespace Strawhenge.Spawning.Unity.PedSpawner
+namespace Strawhenge.Spawning.Unity.Peds.PedSpawner
 {
     public class PedSpawnerScript : MonoBehaviour
     {

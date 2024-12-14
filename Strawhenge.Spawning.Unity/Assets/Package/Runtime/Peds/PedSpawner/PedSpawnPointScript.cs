@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Strawhenge.Spawning.Unity.PedSpawner
+namespace Strawhenge.Spawning.Unity.Peds.PedSpawner
 {
     public class PedSpawnPointScript : MonoBehaviour
     {

@@ -1,7 +1,7 @@
 ﻿using Strawhenge.Common.Unity;
 using UnityEngine;
 
-namespace Strawhenge.Spawning.Unity
+namespace Strawhenge.Spawning.Unity.Peds
 {
     public class SpawnChecker : ISpawnChecker
     {
