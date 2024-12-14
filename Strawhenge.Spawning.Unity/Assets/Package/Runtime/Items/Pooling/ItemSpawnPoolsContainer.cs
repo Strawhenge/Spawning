@@ -43,7 +43,15 @@ namespace Strawhenge.Spawning.Unity.Items
             }
 
             foreach ((ItemSpawnScript prefab, int quantity) in pool)
+            {
+                if (_poolsByPrefab.ContainsKey(prefab))
+                {
+                    _logger.LogWarning($"Duplicate prefab '{prefab}' in spawn pool.");
+                    continue;
+                }
+
                 _poolsByPrefab.Add(prefab, new ItemSpawnPool(prefab, quantity));
+            }
 
             IsLoaded = true;
             Loaded?.Invoke();
