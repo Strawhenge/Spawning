@@ -2,7 +2,7 @@
 
 namespace Strawhenge.Spawning.Unity.Peds
 {
-    public class SpawningScript : MonoBehaviour
+    public class PedSpawningScript : MonoBehaviour
     {
         [SerializeField] Camera _camera;
         [SerializeField] GameObject _player;
