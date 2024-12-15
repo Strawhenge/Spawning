@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Strawhenge.Common.Unity.Helpers;
+using UnityEngine;
 
 namespace Strawhenge.Spawning.Unity.Peds
 {
@@ -15,8 +16,7 @@ namespace Strawhenge.Spawning.Unity.Peds
 
         void Start()
         {
-            if (_camera == null)
-                _camera = Camera.main;
+            ComponentRefHelper.EnsureCamera(ref _camera, nameof(_camera), this);
 
             if (_player == null)
                 _player = GameObject.FindGameObjectWithTag("Player");
