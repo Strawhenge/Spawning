@@ -108,7 +108,7 @@ namespace Strawhenge.Spawning.Unity.Items
                 return;
             }
 
-            if (LayersAccessor.BlockingLayerMask.ContainsLayer(other.gameObject.layer))
+            if (LayersAccessor.ItemSpawnBlockingLayerMask.ContainsLayer(other.gameObject.layer))
             {
                 if (!_blockingColliders.Contains(other))
                     _blockingColliders.Add(other);

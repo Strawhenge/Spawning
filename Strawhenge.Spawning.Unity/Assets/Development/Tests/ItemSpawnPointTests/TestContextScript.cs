@@ -24,7 +24,9 @@ namespace Strawhenge.Spawning.Unity.Tests.ItemSpawnPointTests
 
         public ItemSpawnPointScript[] MultiItemSpawnPoints { get; private set; }
 
-        public LayerMask BlockingLayerMask => _blockingLayerMask;
+        public int TriggersLayer => 0;
+        
+        public LayerMask ItemSpawnBlockingLayerMask => _blockingLayerMask;
 
         void Awake()
         {

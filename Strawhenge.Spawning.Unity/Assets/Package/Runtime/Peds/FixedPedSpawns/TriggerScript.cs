@@ -8,11 +8,11 @@ namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
         public event Action PlayerEnter;
         public event Action PlayerExit;
 
-        public ITriggersLayerAccessor TriggersLayerAccessor { private get; set; }
+        public ILayersAccessor LayerAccessor { private get; set; }
 
         void Start()
         {
-            gameObject.layer = TriggersLayerAccessor.Layer;
+            gameObject.layer = LayerAccessor.TriggersLayer;
         }
 
         void OnTriggerEnter(Collider other)
