@@ -19,7 +19,16 @@ namespace Strawhenge.Spawning.Unity.Peds
             ComponentRefHelper.EnsureCamera(ref _camera, nameof(_camera), this);
 
             if (_player == null)
+            {
+                Debug.LogWarning($"'{_player}' not assigned. Searching by tag.");
+
                 _player = GameObject.FindGameObjectWithTag("Player");
+                if (_player == null)
+                {
+                    Debug.LogError($"'{_player}' not found. Using '{gameObject}' instead.");
+                    _player = gameObject;
+                }
+            }
 
             SpawnChecker.Camera = _camera;
             SpawnChecker.Player = _player;
