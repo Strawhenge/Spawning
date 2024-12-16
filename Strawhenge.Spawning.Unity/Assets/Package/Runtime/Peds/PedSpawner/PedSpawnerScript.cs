@@ -12,13 +12,13 @@ namespace Strawhenge.Spawning.Unity.Peds.PedSpawner
         [SerializeField] int _maxSpawns;
         [SerializeField] float _maxSpawnDistance;
 
-        [SerializeField, Tooltip("In Seconds")]
+        [SerializeField, Tooltip("In seconds.")]
         float _updateSpawnPointsInterval;
 
-        [SerializeField, Tooltip("In Seconds")]
+        [SerializeField, Tooltip("In seconds.")]
         float _spawnInterval;
 
-        [SerializeField, Tooltip("In Seconds")]
+        [SerializeField, Tooltip("In seconds.")]
         float _despawnInterval;
 
         [SerializeField, Tooltip("Number of preloaded instances of each spawnable ped.")]
