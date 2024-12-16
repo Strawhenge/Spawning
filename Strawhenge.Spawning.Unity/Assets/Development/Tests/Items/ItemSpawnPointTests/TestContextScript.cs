@@ -4,7 +4,7 @@ using Strawhenge.Spawning.Unity.Items;
 using System.Linq;
 using UnityEngine;
 
-namespace Strawhenge.Spawning.Unity.Tests.ItemSpawnPointTests
+namespace Strawhenge.Spawning.Unity.Tests.Items.ItemSpawnPointTests
 {
     public class TestContextScript : BaseTestContextScript, ILayersAccessor
     {

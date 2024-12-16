@@ -1,7 +1,7 @@
 ﻿using Strawhenge.Spawning.Unity.Items;
 using UnityEngine;
 
-namespace Strawhenge.Spawning.Unity.Tests
+namespace Strawhenge.Spawning.Unity.Tests.Items
 {
     public static class ItemSpawnScriptExtensions
     {

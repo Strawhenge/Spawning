@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Strawhenge.Spawning.Unity.Tests.ItemSpawnPointTests
+namespace Strawhenge.Spawning.Unity.Tests.Items.ItemSpawnPointTests
 {
     public class WhenAllSpawnPartsDespawned : BaseTest<TestContextScript>
     {

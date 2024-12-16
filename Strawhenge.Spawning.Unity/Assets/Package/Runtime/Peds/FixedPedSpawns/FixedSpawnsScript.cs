@@ -13,6 +13,9 @@ namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
 
         void Awake()
         {
+            if (_player == null)
+                Debug.LogError($"'{nameof(_player)}' not set.", this);
+
             _fixedSpawnPoints = GetComponentsInChildren<FixedSpawnPointScript>();
         }
 
@@ -34,7 +37,7 @@ namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
             _fixedSpawnPoints
                 .ForEach(x => x.Despawn());
         }
-        
+
         void OnTriggerEnter(Collider other)
         {
             if (other.gameObject == _player)

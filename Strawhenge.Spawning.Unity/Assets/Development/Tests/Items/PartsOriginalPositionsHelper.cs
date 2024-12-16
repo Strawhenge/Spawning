@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace Strawhenge.Spawning.Unity.Tests
+namespace Strawhenge.Spawning.Unity.Tests.Items
 {
     public static class PartsOriginalPositionsHelper
     {

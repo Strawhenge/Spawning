@@ -4,7 +4,7 @@ using Strawhenge.Spawning.Unity.Items;
 using System.Linq;
 using Object = UnityEngine.Object;
 
-namespace Strawhenge.Spawning.Unity.Tests
+namespace Strawhenge.Spawning.Unity.Tests.Items
 {
     public static class SpawnsHelper
     {

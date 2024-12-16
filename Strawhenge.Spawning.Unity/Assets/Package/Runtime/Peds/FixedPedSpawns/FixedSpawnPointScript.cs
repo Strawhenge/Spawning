@@ -10,14 +10,21 @@ namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
         [SerializeField] GameObject _prefab;
         [SerializeField] EventScriptableObject[] _onSpawnEvents;
 
+        [SerializeField, Min(0.1f), Tooltip("In seconds.")]
+        float _despawnCheckInterval = 5;
+
         GameObject _spawned;
         Coroutine _flagForDespawn;
 
         public ISpawnChecker SpawnChecker { private get; set; }
 
+        public bool HasSpawned => _spawned != null;
+
+        public float DespawnCheckInterval => _despawnCheckInterval;
+
         internal void Spawn()
         {
-            if (_spawned != null)
+            if (HasSpawned)
             {
                 UnflagForDespawn();
                 return;
@@ -30,7 +37,7 @@ namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
 
         internal void Despawn()
         {
-            if (_spawned == null)
+            if (!HasSpawned)
                 return;
 
             if (!CanDespawn())
@@ -48,7 +55,7 @@ namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
 
             IEnumerator FlagForDespawnCoroutine()
             {
-                var wait = new WaitForSeconds(5);
+                var wait = new WaitForSeconds(_despawnCheckInterval);
 
                 do
                 {

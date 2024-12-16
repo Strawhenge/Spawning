@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Strawhenge.Spawning.Unity.Tests.ItemSpawnPointTests
+namespace Strawhenge.Spawning.Unity.Tests.Items.ItemSpawnPointTests
 {
     public class WhenPlayerReturnsToSpawnPoints : BaseTest<TestContextScript>
     {
