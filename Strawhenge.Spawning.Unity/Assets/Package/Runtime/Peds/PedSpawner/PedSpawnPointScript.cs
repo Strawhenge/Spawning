@@ -6,7 +6,6 @@ namespace Strawhenge.Spawning.Unity.Peds.PedSpawner
 {
     public class PedSpawnPointScript : MonoBehaviour
     {
-        [SerializeField] GameObject[] _spawnablePeds;
         [SerializeField] EventScriptableObject[] _onSpawnEvents;
 
         [SerializeField, Tooltip("In seconds")]
@@ -21,15 +20,6 @@ namespace Strawhenge.Spawning.Unity.Peds.PedSpawner
         void Awake()
         {
             _transform = transform;
-        }
-
-        void OnEnable()
-        {
-            if (_spawnablePeds.Length == 0)
-            {
-                Debug.LogError("Spawn point has no spawnable peds.", this);
-                enabled = false;
-            }
         }
 
         internal bool CanSpawn(ISpawnChecker spawnChecker)
