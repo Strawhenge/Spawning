@@ -61,6 +61,7 @@ namespace Strawhenge.Spawning.Unity.Items
         {
             _logger.LogInformation("Clearing item spawn pools.");
             _poolsByPrefab.Clear();
+            IsLoaded = false;
         }
     }
 }
