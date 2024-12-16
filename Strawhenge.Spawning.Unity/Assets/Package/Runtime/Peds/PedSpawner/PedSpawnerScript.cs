@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -25,14 +24,11 @@ namespace Strawhenge.Spawning.Unity.Peds.PedSpawner
         [SerializeField, Tooltip("Number of preloaded instances of each spawnable ped.")]
         int _preloadEachPedCount;
 
-        readonly List<PedScript> _peds = new List<PedScript>();
+        readonly List<PedScript> _peds = new();
 
         PedSpawnPointScript[] _allSpawnPoints = Array.Empty<PedSpawnPointScript>();
         PedSpawnPointScript[] _availableSpawnPoints = Array.Empty<PedSpawnPointScript>();
         PedPool _pedPool;
-        Coroutine _updateSpawnPoints;
-        Coroutine _manageDespawns;
-        Coroutine _manageSpawns;
 
         public ISpawnChecker SpawnChecker { private get; set; }
 
@@ -53,46 +49,9 @@ namespace Strawhenge.Spawning.Unity.Peds.PedSpawner
         {
             _pedPool.PreloadEachPed(_preloadEachPedCount);
 
-            _updateSpawnPoints = StartCoroutine(UpdateSpawnPointsCoroutine());
-            _manageSpawns = StartCoroutine(ManageSpawnsCoroutine());
-            _manageDespawns = StartCoroutine(ManageDespawnsCoroutine());
-
-            IEnumerator UpdateSpawnPointsCoroutine()
-            {
-                var interval = new WaitForSeconds(_updateSpawnPointsInterval);
-                while (enabled)
-                {
-                    UpdateSpawnPoints();
-                    yield return interval;
-                }
-            }
-
-            IEnumerator ManageSpawnsCoroutine()
-            {
-                var interval = new WaitForSeconds(_spawnInterval);
-                while (enabled)
-                {
-                    ManageSpawns();
-                    yield return interval;
-                }
-            }
-
-            IEnumerator ManageDespawnsCoroutine()
-            {
-                var interval = new WaitForSeconds(_despawnInterval);
-                while (enabled)
-                {
-                    ManageDespawns();
-                    yield return interval;
-                }
-            }
-        }
-
-        void OnDisable()
-        {
-            StopCoroutine(_updateSpawnPoints);
-            StopCoroutine(_manageSpawns);
-            StopCoroutine(_manageDespawns);
+            InvokeRepeating(nameof(UpdateSpawnPoints), 0, _updateSpawnPointsInterval);
+            InvokeRepeating(nameof(ManageSpawns), 0, _spawnInterval);
+            InvokeRepeating(nameof(ManageDespawns), 0, _despawnInterval);
         }
 
         void ManageSpawns()
