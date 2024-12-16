@@ -5,27 +5,46 @@ namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
 {
     public class FixedSpawnsScript : MonoBehaviour
     {
+        [SerializeField] GameObject _player;
+
         FixedSpawnPointScript[] _fixedSpawnPoints;
+
+        public ILayersAccessor LayerAccessor { private get; set; }
 
         void Awake()
         {
             _fixedSpawnPoints = GetComponentsInChildren<FixedSpawnPointScript>();
-
-            var trigger = GetComponentInChildren<TriggerScript>();
-            trigger.PlayerEnter += OnPlayerEnter;
-            trigger.PlayerExit += OnPlayerExit;
         }
 
-        void OnPlayerEnter()
+        void Start()
+        {
+            gameObject.layer = LayerAccessor.PedSpawnTriggersLayer;
+        }
+
+        [ContextMenu(nameof(Spawn))]
+        void Spawn()
         {
             _fixedSpawnPoints
                 .ForEach(x => x.Spawn());
         }
 
-        void OnPlayerExit()
+        [ContextMenu(nameof(Despawn))]
+        void Despawn()
         {
             _fixedSpawnPoints
                 .ForEach(x => x.Despawn());
+        }
+        
+        void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject == _player)
+                Spawn();
+        }
+
+        void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject == _player)
+                Despawn();
         }
     }
 }

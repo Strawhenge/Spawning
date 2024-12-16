@@ -13,7 +13,7 @@ namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
         GameObject _spawned;
         Coroutine _flagForDespawn;
 
-        public SpawnChecker SpawnChecker { private get; set; }
+        public ISpawnChecker SpawnChecker { private get; set; }
 
         internal void Spawn()
         {
