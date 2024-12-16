@@ -12,7 +12,7 @@ namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
 
         void Start()
         {
-            gameObject.layer = LayerAccessor.TriggersLayer;
+            gameObject.layer = LayerAccessor.PedSpawnTriggersLayer;
         }
 
         void OnTriggerEnter(Collider other)

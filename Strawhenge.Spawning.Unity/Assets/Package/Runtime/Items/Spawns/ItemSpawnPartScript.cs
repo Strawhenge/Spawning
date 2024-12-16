@@ -5,14 +5,14 @@ namespace Strawhenge.Spawning.Unity.Items
 {
     public class ItemSpawnPartScript : MonoBehaviour
     {
-        PlayerRadiusScript _playerRadius;
+        PlayerItemSpawnRadiusScript _playerItemSpawnRadius;
 
         void Awake()
         {
-            _playerRadius = FindObjectOfType<PlayerRadiusScript>();
+            _playerItemSpawnRadius = FindObjectOfType<PlayerItemSpawnRadiusScript>();
 
-            if (_playerRadius == null)
-                Debug.LogWarning($"'{nameof(PlayerRadiusScript)}' not found in scene.", this);
+            if (_playerItemSpawnRadius == null)
+                Debug.LogWarning($"'{nameof(PlayerItemSpawnRadiusScript)}' not found in scene.", this);
         }
 
         public event Action<ItemSpawnPartScript> Despawned;
@@ -25,8 +25,8 @@ namespace Strawhenge.Spawning.Unity.Items
         }
 
         public bool IsInPlayerRadius() =>
-            !ReferenceEquals(null, _playerRadius) &&
-            _playerRadius.IsInRadius(transform);
+            !ReferenceEquals(null, _playerItemSpawnRadius) &&
+            _playerItemSpawnRadius.IsInRadius(transform);
 
         public Action<ItemSpawnPartScript> DespawnStrategy { private get; set; } =
             part => Debug.LogError($"{nameof(DespawnStrategy)} not set.", part);

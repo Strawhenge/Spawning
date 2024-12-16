@@ -1,9 +1,9 @@
 using Strawhenge.Common.Unity;
 using UnityEngine;
 
-namespace Strawhenge.Spawning.Unity
+namespace Strawhenge.Spawning.Unity.Items
 {
-    public class PlayerRadiusScript : MonoBehaviour
+    public class PlayerItemSpawnRadiusScript : MonoBehaviour
     {
         [SerializeField, Min(1)] float _radius = 25;
 

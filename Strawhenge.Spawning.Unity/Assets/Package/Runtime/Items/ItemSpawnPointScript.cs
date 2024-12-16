@@ -4,6 +4,7 @@ using Strawhenge.Common.Unity.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Strawhenge.Spawning.Unity.Items
 {
@@ -16,7 +17,7 @@ namespace Strawhenge.Spawning.Unity.Items
         Transform _overridePoint;
 
         [SerializeField] bool _randomizeDirection;
-        [SerializeField] PlayerRadiusScript _playerTrigger;
+        [FormerlySerializedAs("_playerTrigger")] [SerializeField] PlayerItemSpawnRadiusScript _playerItemSpawnTrigger;
 
         readonly List<Collider> _blockingColliders = new();
         Maybe<ItemSpawnScript> _currentSpawn = Maybe.None<ItemSpawnScript>();
@@ -49,7 +50,7 @@ namespace Strawhenge.Spawning.Unity.Items
                 ? _overridePoint
                 : transform;
 
-            ComponentRefHelper.EnsureSceneComponent(ref _playerTrigger, nameof(_playerTrigger), this);
+            ComponentRefHelper.EnsureSceneComponent(ref _playerItemSpawnTrigger, nameof(_playerItemSpawnTrigger), this);
 
             if (_spawnCollection == null)
                 Debug.LogError($"'{nameof(_spawnCollection)}' not set.", this);
@@ -101,7 +102,7 @@ namespace Strawhenge.Spawning.Unity.Items
 
         void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject == _playerTrigger.gameObject)
+            if (other.gameObject == _playerItemSpawnTrigger.gameObject)
             {
                 IsInPlayerRadius = true;
                 Spawn();
@@ -117,7 +118,7 @@ namespace Strawhenge.Spawning.Unity.Items
 
         void OnTriggerExit(Collider other)
         {
-            if (other.gameObject == _playerTrigger.gameObject)
+            if (other.gameObject == _playerItemSpawnTrigger.gameObject)
             {
                 IsInPlayerRadius = false;
                 return;

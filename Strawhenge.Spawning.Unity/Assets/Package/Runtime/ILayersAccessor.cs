@@ -4,7 +4,7 @@ namespace Strawhenge.Spawning.Unity
 {
     public interface ILayersAccessor
     {
-        int TriggersLayer { get; }
+        int PedSpawnTriggersLayer { get; }
         
         LayerMask ItemSpawnBlockingLayerMask { get; }
     }

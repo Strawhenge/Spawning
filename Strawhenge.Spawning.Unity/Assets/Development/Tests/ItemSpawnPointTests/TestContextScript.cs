@@ -24,7 +24,7 @@ namespace Strawhenge.Spawning.Unity.Tests.ItemSpawnPointTests
 
         public ItemSpawnPointScript[] MultiItemSpawnPoints { get; private set; }
 
-        public int TriggersLayer => 0;
+        public int PedSpawnTriggersLayer => 0;
         
         public LayerMask ItemSpawnBlockingLayerMask => _blockingLayerMask;
 
