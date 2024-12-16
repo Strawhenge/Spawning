@@ -18,5 +18,10 @@ namespace Strawhenge.Spawning.Unity.Items
 
             Container.Load(_pool.GetPool());
         }
+
+        void OnDestroy()
+        {
+            Container.Clear();
+        }
     }
 }
