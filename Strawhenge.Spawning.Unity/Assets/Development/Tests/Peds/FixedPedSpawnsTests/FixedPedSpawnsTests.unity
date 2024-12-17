@@ -252,9 +252,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 1163600212}
   _fixedSpawns: {fileID: 5775721956471012621}
-  _triggersLayer:
-    serializedVersion: 2
-    m_Bits: 1
 --- !u!4 &1137367033
 Transform:
   m_ObjectHideFlags: 0

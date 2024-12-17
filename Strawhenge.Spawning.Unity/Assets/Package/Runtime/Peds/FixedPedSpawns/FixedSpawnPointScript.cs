@@ -7,13 +7,13 @@ namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
 {
     public class FixedSpawnPointScript : MonoBehaviour
     {
-        [SerializeField] GameObject _prefab;
+        [SerializeField] PedScript _prefab;
         [SerializeField] EventScriptableObject[] _onSpawnEvents;
 
         [SerializeField, Min(0.1f), Tooltip("In seconds.")]
         float _despawnCheckInterval = 5;
 
-        GameObject _spawned;
+        PedScript _spawned;
         Coroutine _flagForDespawn;
 
         public ISpawnChecker SpawnChecker { private get; set; }
@@ -32,7 +32,7 @@ namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
 
             _spawned = Instantiate(_prefab, transform.position, transform.rotation);
 
-            _onSpawnEvents.ForEach(x => x.Invoke(_spawned));
+            _onSpawnEvents.ForEach(x => x.Invoke(_spawned.gameObject));
         }
 
         internal void Despawn()
@@ -72,6 +72,6 @@ namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
                 StopCoroutine(_flagForDespawn);
         }
 
-        bool CanDespawn() => SpawnChecker.CanDespawn(_spawned);
+        bool CanDespawn() => SpawnChecker.CanDespawn(_spawned.gameObject);
     }
 }
