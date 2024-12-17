@@ -90,10 +90,10 @@ namespace Strawhenge.Spawning.Unity.Peds
             if (ReferenceEquals(_camera, null) || ReferenceEquals(_player, null) || _settings == null)
             {
                 _logger.LogError($"'{nameof(SpawnChecker)}' setup is invalid.");
-                return false;
+                return true;
             }
 
-            return true;
+            return false;
         }
     }
 }
