@@ -25,10 +25,7 @@ namespace Strawhenge.Spawning.Unity.Peds
 
                 _player = GameObject.FindGameObjectWithTag("Player");
                 if (_player == null)
-                {
-                    Debug.LogError($"'{_player}' not found. Using '{gameObject}' instead.");
-                    _player = gameObject;
-                }
+                    Debug.LogError($"'{_player}' not found.");
             }
 
             SpawnChecker.Setup(_camera, _player, _settings.GetValue());
