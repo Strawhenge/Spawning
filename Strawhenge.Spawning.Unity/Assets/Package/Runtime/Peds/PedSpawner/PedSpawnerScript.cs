@@ -10,7 +10,6 @@ namespace Strawhenge.Spawning.Unity.Peds.PedSpawner
     {
         [SerializeField] PedScript[] _spawnablePeds;
         [SerializeField] int _maxSpawns;
-        [SerializeField] float _maxSpawnDistance;
 
         [SerializeField, Tooltip("In seconds.")]
         float _updateSpawnPointsInterval;
@@ -110,7 +109,7 @@ namespace Strawhenge.Spawning.Unity.Peds.PedSpawner
         void UpdateSpawnPoints()
         {
             _availableSpawnPoints = _allSpawnPoints
-                .Where(x => SpawnChecker.GetDistanceTo(x.transform.position) <= _maxSpawnDistance)
+                .Where(x => SpawnChecker.IsWithinMaxSpawnDistance(x.transform.position))
                 .ToArray();
         }
     }

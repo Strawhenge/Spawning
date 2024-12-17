@@ -8,12 +8,15 @@ namespace Strawhenge.Spawning.Unity.Tests.Peds
         bool _canSpawn;
         bool _canSpawnInEntrance;
         bool _canDespawn;
+        bool _isWithinMaxSpawnDistance;
 
-        public bool ArrangeCanSpawn(bool value) => _canSpawn = value;
+        public void ArrangeCanSpawn(bool value) => _canSpawn = value;
 
-        public bool ArrangeCanSpawnInEntrance(bool value) => _canSpawnInEntrance = value;
+        public void ArrangeCanSpawnInEntrance(bool value) => _canSpawnInEntrance = value;
 
-        public bool ArrangeCanDespawn(bool value) => _canDespawn = value;
+        public void ArrangeCanDespawn(bool value) => _canDespawn = value;
+
+        public void ArrangeIsWithinMaxSpawnDistance(bool value) => _isWithinMaxSpawnDistance = value;
 
         public bool CanSpawn(Vector3 position) => _canSpawn;
 
@@ -21,6 +24,6 @@ namespace Strawhenge.Spawning.Unity.Tests.Peds
 
         public bool CanDespawn(GameObject gameObject) => _canDespawn;
 
-        public float GetDistanceTo(Vector3 position) => 0;
+        public bool IsWithinMaxSpawnDistance(Vector3 position) => _isWithinMaxSpawnDistance;
     }
 }

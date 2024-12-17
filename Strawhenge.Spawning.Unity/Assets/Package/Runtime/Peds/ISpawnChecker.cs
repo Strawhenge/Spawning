@@ -10,6 +10,6 @@ namespace Strawhenge.Spawning.Unity.Peds
 
         bool CanDespawn(GameObject gameObject);
 
-        float GetDistanceTo(Vector3 position);
+        bool IsWithinMaxSpawnDistance(Vector3 position);
     }
 }
