@@ -9,19 +9,12 @@ namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
 
         FixedSpawnPointScript[] _fixedSpawnPoints;
 
-        public ILayersAccessor LayerAccessor { private get; set; }
-
         void Awake()
         {
             if (_player == null)
                 Debug.LogError($"'{nameof(_player)}' not set.", this);
 
             _fixedSpawnPoints = GetComponentsInChildren<FixedSpawnPointScript>();
-        }
-
-        void Start()
-        {
-            gameObject.layer = LayerAccessor.PedSpawnTriggersLayer;
         }
 
         [ContextMenu(nameof(Spawn))]

@@ -30,8 +30,6 @@ namespace Strawhenge.Spawning.Unity
             }
         }
 
-        int ILayersAccessor.PedSpawnTriggersLayer => 0;
-
         LayerMask ILayersAccessor.ItemSpawnBlockingLayerMask => _blockingLayerMask;
     }
 }

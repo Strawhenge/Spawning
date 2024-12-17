@@ -3,11 +3,10 @@ using UnityEngine;
 
 namespace Strawhenge.Spawning.Unity.Tests.Peds
 {
-    public class FixedPedsSpawnsTestContextScript : BaseTestContextScript, ILayersAccessor
+    public class FixedPedsSpawnsTestContextScript : BaseTestContextScript
     {
         [SerializeField] GameObject _player;
         [SerializeField] FixedSpawnsScript _fixedSpawns;
-        [SerializeField] LayerMask _triggersLayer;
 
         Vector3 _originalPlayerPosition;
         
@@ -30,8 +29,6 @@ namespace Strawhenge.Spawning.Unity.Tests.Peds
 
         void Awake()
         {
-            _fixedSpawns.LayerAccessor = this;
-
             SpawnPoints = FindObjectsOfType<FixedSpawnPointScript>(includeInactive: true);
             foreach (var spawnPoint in SpawnPoints)
             {
@@ -44,10 +41,6 @@ namespace Strawhenge.Spawning.Unity.Tests.Peds
         public SpawnCheckerFake SpawnChecker { get; } = new SpawnCheckerFake();
 
         public FixedSpawnPointScript[] SpawnPoints { get; private set; }
-
-        public int PedSpawnTriggersLayer => _triggersLayer;
-
-        public LayerMask ItemSpawnBlockingLayerMask => 0;
 
         public void MovePlayerToTrigger()
         {
