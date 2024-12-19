@@ -15,12 +15,13 @@ namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
 
         PedScript _spawned;
         Coroutine _flagForDespawn;
-
-        public ISpawnChecker SpawnChecker { private get; set; }
+        BasePlayerPedSpawningScript _player;
 
         public bool HasSpawned => _spawned != null;
 
         public float DespawnCheckInterval => _despawnCheckInterval;
+
+        internal void SetPlayer(BasePlayerPedSpawningScript player) => _player = player;
 
         internal void Spawn()
         {
@@ -46,13 +47,13 @@ namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
                 return;
             }
 
-            Destroy(_spawned);
+            Destroy(_spawned.gameObject);
         }
 
         void FlagForDespawn()
         {
             _flagForDespawn = StartCoroutine(
-                CoroutineHelper.DoWhen(() => Destroy(_spawned), CanDespawn, _despawnCheckInterval));
+                CoroutineHelper.DoWhen(() => Destroy(_spawned.gameObject), CanDespawn, _despawnCheckInterval));
         }
 
         void UnflagForDespawn()
@@ -61,6 +62,11 @@ namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
                 StopCoroutine(_flagForDespawn);
         }
 
-        bool CanDespawn() => SpawnChecker.CanDespawn(_spawned.gameObject);
+        bool CanDespawn()
+        {
+            if (_player == null)
+                return true;
+            return _player.CanDespawn(_spawned.gameObject);
+        }
     }
 }

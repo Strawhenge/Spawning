@@ -22,14 +22,14 @@ namespace Strawhenge.Spawning.Unity.Peds.PedSpawner
             _transform = transform;
         }
 
-        internal bool CanSpawn(ISpawnChecker spawnChecker)
+        internal bool CanSpawn(BasePlayerPedSpawningScript player)
         {
             if (_isAwaitingCooldown)
                 return false;
 
             return _isEntrance
-                ? spawnChecker.CanSpawnInEntrance(transform.position)
-                : spawnChecker.CanSpawn(transform.position);
+                ? player.CanSpawnInEntrance(transform.position)
+                : player.CanSpawn(transform.position);
         }
 
         internal void Spawn(PedScript ped)

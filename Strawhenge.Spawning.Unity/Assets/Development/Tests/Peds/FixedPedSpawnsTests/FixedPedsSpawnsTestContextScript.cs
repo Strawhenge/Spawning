@@ -1,4 +1,5 @@
-﻿using Strawhenge.Spawning.Unity.Peds.FixedPedSpawns;
+﻿using Strawhenge.Spawning.Unity.Peds;
+using Strawhenge.Spawning.Unity.Peds.FixedPedSpawns;
 using UnityEngine;
 
 namespace Strawhenge.Spawning.Unity.Tests.Peds
@@ -9,7 +10,7 @@ namespace Strawhenge.Spawning.Unity.Tests.Peds
         [SerializeField] FixedSpawnsScript _fixedSpawns;
 
         Vector3 _originalPlayerPosition;
-        
+
         public override bool IsInvalid()
         {
             if (_fixedSpawns == null)
@@ -30,15 +31,11 @@ namespace Strawhenge.Spawning.Unity.Tests.Peds
         void Awake()
         {
             SpawnPoints = FindObjectsOfType<FixedSpawnPointScript>(includeInactive: true);
-            foreach (var spawnPoint in SpawnPoints)
-            {
-                spawnPoint.SpawnChecker = SpawnChecker;
-            }
-
+            Player = FindObjectOfType<FakePlayerPedSpawningScript>();
             _originalPlayerPosition = _player.transform.position;
         }
 
-        public SpawnCheckerFake SpawnChecker { get; } = new SpawnCheckerFake();
+        public FakePlayerPedSpawningScript Player { get; private set; }
 
         public FixedSpawnPointScript[] SpawnPoints { get; private set; }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Strawhenge.Common.Unity.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,6 +12,9 @@ namespace Strawhenge.Spawning.Unity.Peds.PedSpawner
         [SerializeField] PedScript[] _spawnablePeds;
         [SerializeField] int _maxSpawns;
 
+        [SerializeField, Tooltip("Number of preloaded instances of each spawnable ped.")]
+        int _preloadEachPedCount;
+
         [SerializeField, Tooltip("In seconds.")]
         float _updateSpawnPointsInterval;
 
@@ -20,16 +24,13 @@ namespace Strawhenge.Spawning.Unity.Peds.PedSpawner
         [SerializeField, Tooltip("In seconds.")]
         float _despawnInterval;
 
-        [SerializeField, Tooltip("Number of preloaded instances of each spawnable ped.")]
-        int _preloadEachPedCount;
+        [SerializeField] BasePlayerPedSpawningScript _player;
 
         readonly List<PedScript> _peds = new();
 
         PedSpawnPointScript[] _allSpawnPoints = Array.Empty<PedSpawnPointScript>();
         PedSpawnPointScript[] _availableSpawnPoints = Array.Empty<PedSpawnPointScript>();
         PedPool _pedPool;
-
-        public ISpawnChecker SpawnChecker { private get; set; }
 
         [ContextMenu(nameof(DespawnAll))]
         public void DespawnAll()
@@ -40,6 +41,7 @@ namespace Strawhenge.Spawning.Unity.Peds.PedSpawner
 
         void Awake()
         {
+            ComponentRefHelper.EnsureSceneComponent(ref _player, nameof(_player), this);
             _allSpawnPoints = FindObjectsOfType<PedSpawnPointScript>();
             _pedPool = new PedPool(_spawnablePeds);
         }
@@ -59,7 +61,7 @@ namespace Strawhenge.Spawning.Unity.Peds.PedSpawner
                 return;
 
             var spawnPoints = _availableSpawnPoints
-                .Where(x => x.CanSpawn(SpawnChecker))
+                .Where(x => x.CanSpawn(_player))
                 .ToArray();
 
             if (spawnPoints.Length == 0) return;
@@ -104,12 +106,12 @@ namespace Strawhenge.Spawning.Unity.Peds.PedSpawner
             }
         }
 
-        bool ShouldDespawn(GameObject ped) => SpawnChecker.CanDespawn(ped);
+        bool ShouldDespawn(GameObject ped) => _player.CanDespawn(ped);
 
         void UpdateSpawnPoints()
         {
             _availableSpawnPoints = _allSpawnPoints
-                .Where(x => SpawnChecker.IsWithinMaxSpawnDistance(x.transform.position))
+                .Where(x => _player.IsInRadius(x.transform.position))
                 .ToArray();
         }
     }

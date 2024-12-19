@@ -37,7 +37,7 @@ namespace Strawhenge.Spawning.Unity.Tests.Peds
 
             yield return new WaitForFixedUpdate();
 
-            Context.SpawnChecker.ArrangeCanDespawn(true);
+            Context.Player.ArrangeCanDespawn(true);
             Context.MovePlayerFromTrigger();
 
             yield return new WaitForFixedUpdate();

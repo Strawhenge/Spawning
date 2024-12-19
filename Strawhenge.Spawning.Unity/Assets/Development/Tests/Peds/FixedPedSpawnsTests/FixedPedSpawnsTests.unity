@@ -280,6 +280,7 @@ GameObject:
   - component: {fileID: 1163600214}
   - component: {fileID: 1163600213}
   - component: {fileID: 1163600217}
+  - component: {fileID: 1163600218}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -382,6 +383,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1163600218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163600212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcfbe999fdfb4233a6bfe226eacfc3b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _canSpawn: 0
+  _canSpawnInEntrance: 0
+  _canDespawn: 0
+  _isWithinMaxSpawnDistance: 0
 --- !u!1 &1467755802
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,7 +587,7 @@ PrefabInstance:
     - target: {fileID: 2352705854225421463, guid: cf2444db53319614daa0d36c7baaaaac, type: 3}
       propertyPath: _player
       value: 
-      objectReference: {fileID: 1163600212}
+      objectReference: {fileID: 1163600218}
     - target: {fileID: 5862823483372267506, guid: cf2444db53319614daa0d36c7baaaaac, type: 3}
       propertyPath: m_Name
       value: FixedPedSpawn

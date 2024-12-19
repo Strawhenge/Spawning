@@ -1,20 +1,21 @@
 ﻿using Strawhenge.Common;
+using Strawhenge.Common.Unity.Helpers;
 using UnityEngine;
 
 namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
 {
     public class FixedSpawnsScript : MonoBehaviour
     {
-        [SerializeField] GameObject _player;
+        [SerializeField] BasePlayerPedSpawningScript _player;
 
         FixedSpawnPointScript[] _fixedSpawnPoints;
 
         void Awake()
         {
-            if (_player == null)
-                Debug.LogError($"'{nameof(_player)}' not set.", this);
+            ComponentRefHelper.EnsureSceneComponent(ref _player, nameof(_player), this);
 
             _fixedSpawnPoints = GetComponentsInChildren<FixedSpawnPointScript>();
+            _fixedSpawnPoints.ForEach(p => p.SetPlayer(_player));
         }
 
         [ContextMenu(nameof(Spawn))]
@@ -33,13 +34,13 @@ namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
 
         void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject == _player)
+            if (other.gameObject == _player.gameObject)
                 Spawn();
         }
 
         void OnTriggerExit(Collider other)
         {
-            if (other.gameObject == _player)
+            if (other.gameObject == _player.gameObject)
                 Despawn();
         }
     }
