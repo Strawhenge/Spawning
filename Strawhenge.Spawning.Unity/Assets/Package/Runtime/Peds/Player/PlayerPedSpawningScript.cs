@@ -1,4 +1,5 @@
-﻿using Strawhenge.Common.Unity.Helpers;
+﻿using Strawhenge.Common.Unity;
+using Strawhenge.Common.Unity.Helpers;
 using Strawhenge.Common.Unity.Serialization;
 using Strawhenge.Spawning.Unity.Peds.Settings;
 using UnityEngine;
@@ -17,6 +18,10 @@ namespace Strawhenge.Spawning.Unity.Peds
         void Awake()
         {
             ComponentRefHelper.EnsureCamera(ref _camera, nameof(_camera), this);
+
+            var rigidBody = this.GetOrAddComponent<Rigidbody>();
+            rigidBody.isKinematic = true;
+            
             _spawnChecker = new SpawnChecker(_camera, gameObject, _settings.GetValue());
         }
 
