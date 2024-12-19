@@ -10,19 +10,19 @@ namespace Strawhenge.Spawning.Unity.Peds.PedSpawner
     public class PedSpawnerScript : MonoBehaviour
     {
         [SerializeField] PedScript[] _spawnablePeds;
-        [SerializeField] int _maxSpawns;
+        [SerializeField, Min(0)] int _maxSpawns;
 
-        [SerializeField, Tooltip("Number of preloaded instances of each spawnable ped.")]
+        [SerializeField, Min(0), Tooltip("Number of preloaded instances of each spawnable ped.")]
         int _preloadEachPedCount;
 
-        [SerializeField, Tooltip("In seconds.")]
-        float _updateSpawnPointsInterval;
+        [SerializeField, Min(0.1f), Tooltip("In seconds.")]
+        float _updateSpawnPointsInterval = 0.1f;
 
-        [SerializeField, Tooltip("In seconds.")]
-        float _spawnInterval;
+        [SerializeField, Min(0.1f), Tooltip("In seconds.")]
+        float _spawnInterval = 0.1f;
 
-        [SerializeField, Tooltip("In seconds.")]
-        float _despawnInterval;
+        [SerializeField, Min(0.1f), Tooltip("In seconds.")]
+        float _despawnInterval = 0.1f;
 
         [SerializeField] BasePlayerPedSpawningScript _player;
 
