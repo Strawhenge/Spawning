@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using UnityEngine;
-using Strawhenge.Common;
+﻿using Strawhenge.Common;
 using Strawhenge.Common.Unity;
+using Strawhenge.Spawning.Unity.Helpers;
+using UnityEngine;
 
 namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
 {
@@ -51,19 +51,8 @@ namespace Strawhenge.Spawning.Unity.Peds.FixedPedSpawns
 
         void FlagForDespawn()
         {
-            _flagForDespawn = StartCoroutine(FlagForDespawnCoroutine());
-
-            IEnumerator FlagForDespawnCoroutine()
-            {
-                var wait = new WaitForSeconds(_despawnCheckInterval);
-
-                do
-                {
-                    yield return wait;
-                } while (!CanDespawn());
-
-                Destroy(_spawned);
-            }
+            _flagForDespawn = StartCoroutine(
+                CoroutineHelper.DoWhen(() => Destroy(_spawned), CanDespawn, _despawnCheckInterval));
         }
 
         void UnflagForDespawn()
