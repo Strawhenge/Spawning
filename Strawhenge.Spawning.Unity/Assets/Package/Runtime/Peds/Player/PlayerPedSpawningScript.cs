@@ -22,6 +22,10 @@ namespace Strawhenge.Spawning.Unity.Peds
             var rigidBody = this.GetOrAddComponent<Rigidbody>();
             rigidBody.isKinematic = true;
             
+            var collider = GetComponent<Collider>();
+            if (collider == null) collider = this.AddComponent<BoxCollider>();
+            collider.isTrigger = true;
+            
             _spawnChecker = new SpawnChecker(_camera, gameObject, _settings.GetValue());
         }
 
