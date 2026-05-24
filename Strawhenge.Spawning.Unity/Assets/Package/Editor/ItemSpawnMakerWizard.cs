@@ -8,7 +8,7 @@ namespace Strawhenge.Spawning.Unity.Editor
     {
         const string Name = "Item Spawn Maker";
 
-        [MenuItem("Strawhenge/" + Name)]
+        [MenuItem("Strawhenge/Spawning/" + Name)]
         public static void ShowEditorWindow()
         {
             DisplayWizard<ItemSpawnMakerWizard>(Name);
