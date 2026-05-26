@@ -1,6 +1,7 @@
 using FunctionalUtilities;
 using Strawhenge.Common.Unity;
 using Strawhenge.Common.Unity.Helpers;
+using Strawhenge.Common.Unity.Serialization;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace Strawhenge.Spawning.Unity.Items
 {
     public class ItemSpawnPointScript : MonoBehaviour
     {
+        [SerializeField] PlayerItemSpawnRadiusScript _player;
         [SerializeField] ItemSpawnCollectionScriptableObject _spawnCollection;
 
         [SerializeField, Tooltip(
@@ -16,15 +18,17 @@ namespace Strawhenge.Spawning.Unity.Items
         Transform _overridePoint;
 
         [SerializeField] bool _randomizeDirection;
-        
-        [SerializeField] PlayerItemSpawnRadiusScript _player;
+
+        [SerializeField] SerializedSource<
+            IItemSpawnPointLayers,
+            SerializedItemSpawnPointLayers,
+            ItemSpawnPointLayersScriptableObject> _layers;
 
         readonly List<Collider> _blockingColliders = new();
         Maybe<ItemSpawnScript> _currentSpawn = Maybe.None<ItemSpawnScript>();
         Transform _point;
         IItemSpawnSource _spawnSource;
-
-        public IItemSpawnPointLayers LayersAccessor { private get; set; }
+        LayerMask? _blockingLayer;
 
         public IItemSpawnSourceFactory SpawnSourceFactory { private get; set; }
 
@@ -46,14 +50,17 @@ namespace Strawhenge.Spawning.Unity.Items
 
         void Awake()
         {
-            _point = _overridePoint != null
-                ? _overridePoint
-                : transform;
-
             ComponentRefHelper.EnsureSceneComponent(ref _player, nameof(_player), this);
 
             if (_spawnCollection == null)
                 Debug.LogError($"'{nameof(_spawnCollection)}' not set.", this);
+
+            _point = _overridePoint != null
+                ? _overridePoint
+                : transform;
+
+            if (_layers.TryGetValue(out var layers))
+                _blockingLayer = layers.BlockingLayerMask;
         }
 
         void Start()
@@ -109,7 +116,7 @@ namespace Strawhenge.Spawning.Unity.Items
                 return;
             }
 
-            if (LayersAccessor.BlockingLayerMask.ContainsLayer(other.gameObject.layer))
+            if (_blockingLayer.HasValue && _blockingLayer.Value.ContainsLayer(other.gameObject.layer))
             {
                 if (!_blockingColliders.Contains(other))
                     _blockingColliders.Add(other);

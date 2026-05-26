@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 398420059148574874, guid: 115de477f393ed24bbdb8f4234eb71b2, type: 3}
       propertyPath: m_Name
-      value: Multi Item Spawn Point
+      value: Multi Item Spawn Point Variant
       objectReference: {fileID: 0}
     - target: {fileID: 398420059148574877, guid: 115de477f393ed24bbdb8f4234eb71b2, type: 3}
       propertyPath: m_IsTrigger
@@ -60,6 +60,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8683628083047555823, guid: 115de477f393ed24bbdb8f4234eb71b2, type: 3}
+      propertyPath: _layers._type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8683628083047555823, guid: 115de477f393ed24bbdb8f4234eb71b2, type: 3}
       propertyPath: _spawnCollection
       value: 
       objectReference: {fileID: 11400000, guid: 0b4344dd90e35524ca2b9264867910cd, type: 2}
@@ -67,5 +71,9 @@ PrefabInstance:
       propertyPath: _playerTriggerCollider
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8683628083047555823, guid: 115de477f393ed24bbdb8f4234eb71b2, type: 3}
+      propertyPath: _layers._scriptableObject
+      value: 
+      objectReference: {fileID: 11400000, guid: 18e73ee4cccf47441ad0ed940b2d611c, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 115de477f393ed24bbdb8f4234eb71b2, type: 3}

@@ -6,10 +6,9 @@ using UnityEngine;
 
 namespace Strawhenge.Spawning.Unity.Tests.PlayModeTests.Items.ItemSpawnPointTests
 {
-    public class TestContextScript : BaseTestContextScript, IItemSpawnPointLayers
+    public class TestContextScript : BaseTestContextScript
     {
         [SerializeField] GameObject _player;
-        [SerializeField] LayerMask _blockingLayerMask;
         [SerializeField] ItemSpawnPointScript[] _blockedSpawnPoints;
         [SerializeField] GameObject[] _blockingObjects;
 
@@ -25,8 +24,6 @@ namespace Strawhenge.Spawning.Unity.Tests.PlayModeTests.Items.ItemSpawnPointTest
         public ItemSpawnPointScript[] MultiItemSpawnPoints { get; private set; }
 
         public int PedSpawnTriggersLayer => 0;
-        
-        public LayerMask BlockingLayerMask => _blockingLayerMask;
 
         void Awake()
         {
@@ -39,7 +36,6 @@ namespace Strawhenge.Spawning.Unity.Tests.PlayModeTests.Items.ItemSpawnPointTest
 
             foreach (var spawnPoint in AllSpawnPoints)
             {
-                spawnPoint.LayersAccessor = this;
                 spawnPoint.SpawnSourceFactory = spawnSourceFactory;
             }
         }

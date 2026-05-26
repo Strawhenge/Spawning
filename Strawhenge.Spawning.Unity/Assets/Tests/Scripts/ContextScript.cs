@@ -4,9 +4,8 @@ using UnityEngine;
 
 namespace Strawhenge.Spawning.Unity.Tests.Scripts
 {
-    public class ContextScript : MonoBehaviour, IItemSpawnPointLayers
+    public class ContextScript : MonoBehaviour
     {
-        [SerializeField] LayerMask _blockingLayerMask;
         [SerializeField] bool _enablePooling = true;
 
         void Awake()
@@ -20,7 +19,6 @@ namespace Strawhenge.Spawning.Unity.Tests.Scripts
 
             foreach (var spawnPoint in FindObjectsOfType<ItemSpawnPointScript>())
             {
-                spawnPoint.LayersAccessor = this;
                 spawnPoint.SpawnSourceFactory = spawnSourceFactory;
             }
 
@@ -29,7 +27,5 @@ namespace Strawhenge.Spawning.Unity.Tests.Scripts
                 spawnPoolContainer.Container = poolsContainer;
             }
         }
-
-        LayerMask IItemSpawnPointLayers.BlockingLayerMask => _blockingLayerMask;
     }
 }

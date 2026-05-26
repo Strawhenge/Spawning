@@ -110,5 +110,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4eee8a90a9708c44943717ac906b70b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 0}
   _spawnCollection: {fileID: 11400000, guid: b6fa3adfeb1503f489191e2720bf56f4, type: 2}
-  _playerTriggerCollider: {fileID: 0}
+  _overridePoint: {fileID: 0}
+  _randomizeDirection: 0
+  _layers:
+    _serialized:
+      _blockingLayerMask:
+        serializedVersion: 2
+        m_Bits: 0
+    _scriptableObject: {fileID: 11400000, guid: 18e73ee4cccf47441ad0ed940b2d611c, type: 2}
+    _type: 2
