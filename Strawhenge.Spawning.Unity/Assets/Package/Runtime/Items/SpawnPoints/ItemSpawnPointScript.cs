@@ -24,7 +24,7 @@ namespace Strawhenge.Spawning.Unity.Items
         Transform _point;
         IItemSpawnSource _spawnSource;
 
-        public ILayersAccessor LayersAccessor { private get; set; }
+        public IItemSpawnPointLayers LayersAccessor { private get; set; }
 
         public IItemSpawnSourceFactory SpawnSourceFactory { private get; set; }
 
@@ -109,7 +109,7 @@ namespace Strawhenge.Spawning.Unity.Items
                 return;
             }
 
-            if (LayersAccessor.ItemSpawnBlockingLayerMask.ContainsLayer(other.gameObject.layer))
+            if (LayersAccessor.BlockingLayerMask.ContainsLayer(other.gameObject.layer))
             {
                 if (!_blockingColliders.Contains(other))
                     _blockingColliders.Add(other);

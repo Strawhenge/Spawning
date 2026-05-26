@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Strawhenge.Spawning.Unity.Tests.Scripts
 {
-    public class ContextScript : MonoBehaviour, ILayersAccessor
+    public class ContextScript : MonoBehaviour, IItemSpawnPointLayers
     {
         [SerializeField] LayerMask _blockingLayerMask;
         [SerializeField] bool _enablePooling = true;
@@ -30,6 +30,6 @@ namespace Strawhenge.Spawning.Unity.Tests.Scripts
             }
         }
 
-        LayerMask ILayersAccessor.ItemSpawnBlockingLayerMask => _blockingLayerMask;
+        LayerMask IItemSpawnPointLayers.BlockingLayerMask => _blockingLayerMask;
     }
 }

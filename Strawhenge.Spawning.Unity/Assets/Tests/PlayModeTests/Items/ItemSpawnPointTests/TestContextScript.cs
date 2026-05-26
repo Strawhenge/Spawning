@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Strawhenge.Spawning.Unity.Tests.PlayModeTests.Items.ItemSpawnPointTests
 {
-    public class TestContextScript : BaseTestContextScript, ILayersAccessor
+    public class TestContextScript : BaseTestContextScript, IItemSpawnPointLayers
     {
         [SerializeField] GameObject _player;
         [SerializeField] LayerMask _blockingLayerMask;
@@ -26,7 +26,7 @@ namespace Strawhenge.Spawning.Unity.Tests.PlayModeTests.Items.ItemSpawnPointTest
 
         public int PedSpawnTriggersLayer => 0;
         
-        public LayerMask ItemSpawnBlockingLayerMask => _blockingLayerMask;
+        public LayerMask BlockingLayerMask => _blockingLayerMask;
 
         void Awake()
         {
