@@ -34,7 +34,7 @@ namespace Strawhenge.Spawning.Unity.Items
                 .ToArray();
         }
 
-        public void Load(IReadOnlyList<(ItemSpawnScript prefab, int quantity)> pool)
+        public void Load(IReadOnlyList<IItemSpawnQuantity> pool)
         {
             if (IsLoaded)
             {
@@ -42,15 +42,17 @@ namespace Strawhenge.Spawning.Unity.Items
                 return;
             }
 
-            foreach ((ItemSpawnScript prefab, int quantity) in pool)
+            foreach (var itemQuantity in pool)
             {
-                if (_poolsByPrefab.ContainsKey(prefab))
+                if (_poolsByPrefab.ContainsKey(itemQuantity.Prefab))
                 {
-                    _logger.LogWarning($"Duplicate prefab '{prefab}' in spawn pool.");
+                    _logger.LogWarning($"Duplicate prefab '{itemQuantity.Prefab}' in spawn pool.");
                     continue;
                 }
 
-                _poolsByPrefab.Add(prefab, new ItemSpawnPool(prefab, quantity));
+                _poolsByPrefab.Add(
+                    itemQuantity.Prefab,
+                    new ItemSpawnPool(itemQuantity.Prefab, itemQuantity.Quantity));
             }
 
             IsLoaded = true;
