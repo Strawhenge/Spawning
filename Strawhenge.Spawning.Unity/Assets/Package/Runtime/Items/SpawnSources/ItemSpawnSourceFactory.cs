@@ -12,7 +12,7 @@
         }
 
         public IItemSpawnSource Create(
-            ItemSpawnCollectionScriptableObject spawnCollection,
+            IItemSpawnCollection spawnCollection,
             ItemSpawnPointScript spawnPoint)
         {
             return new ItemSpawnSource(

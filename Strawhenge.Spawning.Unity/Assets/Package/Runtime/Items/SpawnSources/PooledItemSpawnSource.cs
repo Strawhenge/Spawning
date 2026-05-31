@@ -9,7 +9,7 @@ namespace Strawhenge.Spawning.Unity.Items
 
         public PooledItemSpawnSource(
             ItemSpawnPoolsContainer itemSpawnPoolsContainer,
-            ItemSpawnCollectionScriptableObject itemSpawnCollection)
+            IItemSpawnCollection itemSpawnCollection)
         {
             _pools = new CycleList<ItemSpawnPool>(predicate: pool => pool.HasAvailableSpawn);
 

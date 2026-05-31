@@ -6,11 +6,11 @@ namespace Strawhenge.Spawning.Unity.Items
     public class InstantiateItemSpawnSourceFactory : IItemSpawnSourceFactory
     {
         readonly Dictionary<
-            ItemSpawnCollectionScriptableObject,
+            IItemSpawnCollection,
             InstantiateItemSpawnSource> _sourcesBySpawnCollection = new();
 
         public IItemSpawnSource Create(
-            ItemSpawnCollectionScriptableObject spawnCollection,
+            IItemSpawnCollection spawnCollection,
             ItemSpawnPointScript spawnPoint)
         {
             return _sourcesBySpawnCollection
