@@ -10,21 +10,15 @@ namespace Strawhenge.Spawning.Unity.Tests.Scripts
 
         void Awake()
         {
-            var logger = new UnityLogger(gameObject);
-            var poolsContainer = new ItemSpawnPoolsContainer(logger);
+            var poolsContainer = FindObjectOfType<ItemSpawnPoolContainerScript>();
 
             IItemSpawnSourceFactory spawnSourceFactory = _enablePooling
-                ? new ItemSpawnSourceFactory(poolsContainer)
+                ? new ItemSpawnSourceFactory(poolsContainer.Container)
                 : new InstantiateItemSpawnSourceFactory();
 
             foreach (var spawnPoint in FindObjectsOfType<ItemSpawnPointScript>())
             {
                 spawnPoint.SpawnSourceFactory = spawnSourceFactory;
-            }
-
-            foreach (var spawnPoolContainer in FindObjectsOfType<ItemSpawnPoolContainerScript>())
-            {
-                spawnPoolContainer.Container = poolsContainer;
             }
         }
     }

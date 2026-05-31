@@ -1,27 +1,36 @@
+using Strawhenge.Common.Unity;
+using System;
 using UnityEngine;
 
 namespace Strawhenge.Spawning.Unity.Items
 {
-    public class ItemSpawnPoolContainerScript : MonoBehaviour
+    public sealed class ItemSpawnPoolContainerScript : MonoBehaviour
     {
         [SerializeField] ItemSpawnPoolScriptableObject _pool;
+        [SerializeField] LoggerScript _logger;
 
-        public ItemSpawnPoolsContainer Container { private get; set; }
+        ItemSpawnPoolsContainer _container;
 
-        void Start()
+        public ItemSpawnPoolsContainer Container => _container ??= Create();
+
+        void Awake()
         {
-            if (_pool == null)
-            {
-                Debug.LogError($"'{nameof(_pool)}' is not assigned.");
-                return;
-            }
-
-            Container.Load(_pool.GetPool());
+            _container ??= Create();
         }
 
-        void OnDestroy()
+        ItemSpawnPoolsContainer Create()
         {
-            Container.Clear();
+            var logger = _logger != null
+                ? _logger.Logger
+                : new UnityLogger(gameObject);
+
+            if (_pool == null)
+            {
+                logger.LogError($"'{nameof(_pool)}' is not assigned.");
+                return new ItemSpawnPoolsContainer(Array.Empty<IItemSpawnQuantity>(), logger);
+            }
+
+            return new ItemSpawnPoolsContainer(_pool.GetPool(), logger);
         }
     }
 }
